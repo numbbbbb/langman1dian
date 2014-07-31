@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
+“http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml” >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<link href="/static/css/wenzhang.css" rel="stylesheet" type="text/css" /> 
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/salert.js"></script>
+<script type="text/javascript" src="/static/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.metadata.js"></script>
+ 		<script type="text/javascript">
+		var panduan=0;
+$(document).ready(function(){
+		  $("#change").mouseleave(function(){
+$(this).attr("src","/static/pic/button/submit_1.png");
+})
+$("#change").mouseover(function(){
+$(this).attr("src","/static/pic/button/submit_2.png");
+})
+
+$("#change").click(function(){
+if (panduan == 0){sAlert("提示","请输入验证码！");setTimeout("",2000);return;}
+if ($("#input").valid()){
+$.getJSON("/change1/",{pwd:document.getElementById('password1').value},function(result){
+      if (result.msg=="成功"){
+	  sAlert("提示","修改成功！");
+	setTimeout("window.location=\"http://127.0.0.1:8000/geren/?a=\"+Math.random();",2000); 
+	  }
+	  else {sAlert("提示","修改失败！");
+	setTimeout("",2000); }
+    });}
+})
+ $("#yzm").focus(function(){
+	$(this).addClass("focus");
+	}).blur(function(){
+	 $.getJSON("/yzm/",{yzm:$("#yzm").val()},function(result){
+      $.each(result, function(i, field){
+		if ($("#yzm").val() != ""){
+		$("#san").html("");
+        $("#san").html(field);};
+		if (field == "验证码错误")
+		{
+		$("#yzmtp").attr("src","/validate/?a="+Math.random());
+		$("#yzm").css("background","red");
+		}
+		else
+		{
+		$("#yzm").css("background","white");
+		panduan = 1;
+		};
+      });
+    });
+	})
+
+})
+</script>
+<script type="text/javascript">
+		
+$().ready(function() {
+ $("#input").validate({
+        rules: {
+   password: {
+    required: true,
+    minlength: 8
+   },
+   password1: {
+    required: true,
+    minlength: 8
+   },
+   password2: {
+    required: true,
+    minlength: 8,
+    equalTo: "#password1"
+   },
+   yzm:{
+	required: true
+	}
+  },
+        messages: {
+	yzm: {required:"请输入验证码"},
+   password: {
+    required: "请输入密码",
+    minlength: jQuery.format("密码不能小于{0}个字 符")
+   },  
+   password1: {
+    required: "请输入新密码",
+    minlength: jQuery.format("新密码不能小于{0}个字 符")
+   },
+   password2: {
+    required: "请输入确认密码",
+    minlength: "确认密码不能小于8个字符",
+    equalTo: "两次输入密码不一致"
+   }
+  }
+    });
+});
+
+</script>
+</head>
+<body style="background-color:transparent">
+
+<div>
+
+			<form name="input" id="input" class="signin"  >
+			<table>
+		<tr>
+		<td><label>当前密码：</label></td>
+		<td><input size="21" type="password" name="password" id="password"  /></td>
+		</tr>
+		<td><label for="password">新密码：</label></td>
+		<td><input size="21" type="password" name="password1" id="password1"  /></td><td></td>
+		</tr>
+		<tr>
+		<td><label for="password2">重复密码：</label></td>
+		<td><input size="21" type="password" name="password2" id="password2"  /></td>
+		</tr>
+		<tr>
+		<td>
+		<label for="yzm">验证码：</label>
+		</td>
+		<td><input size="20" type="text" name="yzm" id="yzm" maxlength="20"  /><img src="/validate/" height="20" width="100" id="yzmtp" /></td></tr><tr><td></td><td><label id="san">验证码区分大小写</label></td>
+		</tr></table>
+		<table>
+		<tr>
+
+		</tr>
+		</table>
+			</form>
+			<img class="img5" id="change" src="/static/pic/button/submit_1.png" style="margin:0;"/>
+</div>
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22cfa18f88a971cf58f97da7b729d25d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>
+</html>

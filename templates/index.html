@@ -1,0 +1,698 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
+“http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml” >
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>浪漫1点----最大的浪漫点子聚集地</title>
+<link rel="shortcut icon" href="/static/pic/icon.jpg">
+<link href="/static/css/layout.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/salert.js"></script>
+<script type="text/javascript" src="/static/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.metadata.js"></script>
+<script src="/static/js/jquery.easing.1.3.js" type="text/javascript"></script>
+<script src="/static/js/contact.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/js/jquery.cursorHover.js"></script>
+<link href="/static/css/wenzhang.css" rel="stylesheet" type="text/css" /> 
+ <script type="text/javascript">
+ var panduan1 = 0;
+ var panduan2 = 0;
+ var panduan3 = 0;
+function submittext()
+{
+if (($("#input").valid())&&(panduan1 == 1)&&(panduan2 == 1)&&(panduan3 == 1)){
+xmlhttp=null;
+if (window.XMLHttpRequest)
+  {// code for Firefox, Opera, IE7, etc.
+  xmlhttp=new XMLHttpRequest();
+  }
+else if (window.ActiveXObject)
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+if (xmlhttp!=null)
+  {
+  xmlhttp.onreadystatechange=function ()
+{
+if (xmlhttp.readyState==4)
+  {// 4 = "loaded"
+  if (xmlhttp.status==200)
+    {// 200 = "OK"
+	sAlert("提示","注册成功！");
+	setTimeout("",2000);
+	window.location="http://www.langman1dian.com/?a="+Math.random();
+}
+  else
+    {
+    alert("Problem retrieving data:" + xmlhttp.statusText);
+    }
+  }
+};
+	$("#contact1").trigger("click");
+  xmlhttp.open("POST","/signup/",true);
+  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  if (document.getElementById("sex1").checked){sex="male"} else {sex="female"}
+  xmlhttp.send("username="+$("#username").val()+"&password="+$("#password").val()+"&sex="+sex+"&email="+$("#email").val());
+  }
+else
+  {
+  alert("Your browser does not support XMLHTTP.");
+  }
+}
+}
+</script>
+<script type="text/javascript">
+var swidth;
+$(document).ready(function(){
+swidth = $("#sidebar").css("width");
+  $("#submit1").click(function (){
+  $.getJSON("/login/",{username:$("#username1").val(),password:$("#password1").val()},function(result){
+      if (result.msg=="用户名不存在")
+	  {
+	  $("#yh1").css("color","Red");
+	  $("#yh1").html(result.msg);
+	  $("#username1").css("background","red");
+	  return false;
+	  }
+	  if (result.msg=="密码错误")
+	  {
+	  $("#yh2").css("color","Red");
+	  $("#yh2").html(result.msg);
+	  $("#password1").css("background","red");
+	  return false;
+	  }
+	  window.location="http://www.langman1dian.com/?a="+Math.random();
+	
+    })
+  }
+  )
+  $("#username").focus(function(){
+	$(this).addClass("focus");
+	}).blur(function(){
+	 $.getJSON("/checkuser/",{username:$("#username").val(),a:Math.random()},function(result){
+      $.each(result, function(i, field){
+		if ($("#username").val() != ""){
+		$("#er").html("");
+        $("#er").html(field);};
+		if (field == "用户名已存在")
+		{
+		panduan1 = 0;
+		$("#username").css("background","red");
+		$("#er").css("color","Red");
+		}
+		else
+		{
+		panduan1 = 1;
+		$("#username").css("background","white");
+		$("#er").css("color","White");
+		};
+      });
+    });
+	});
+	
+	  $("#username1").focus(function(){
+	   $("#yh1").css("color","white");
+	  $("#yh1").html("");
+	  $("#username1").css("background","white");
+	  })
+	
+	  $("#password1").focus(function(){
+	   $("#yh2").css("color","white");
+	  $("#yh2").html("");
+	  $("#password1").css("background","white");
+	  })
+	 $("#yzm").focus(function(){
+	$(this).addClass("focus");
+	}).blur(function(){
+	 $.getJSON("/yzm/",{yzm:$("#yzm").val()},function(result){
+      $.each(result, function(i, field){
+		if ($("#yzm").val() != ""){
+		$("#san").html("");
+		if (field == "验证码错误")
+		{
+		  $("#san").html("<font color='Red';>"+field+"</font>");
+		panduan2 = 0;
+		$("#yzmtp").attr("src","/validate/?="+Math.random());
+		$("#yzm").css("background","red");
+		}
+		else
+		{
+		  $("#san").html("<font color='White';>"+field+"</font>");
+		panduan2 = 1;
+		$("#yzm").css("background","white");
+		};}
+      });
+    });
+	});
+  $("#email").focus(function(){
+	$(this).addClass("focus");
+	}).blur(function(){
+	 $.getJSON("/checkemail/",{email:$("#email").val(),a:Math.random()},function(result){
+      $.each(result, function(i, field){
+		if ($("#email").val() != ""){
+		$("#si").html("");
+        $("#si").html(field);};
+		if (field == "邮箱已注册")
+		{
+		panduan3 = 0;
+		$("#email").css("background","red");
+		$("#si").css("color","Red");
+		}
+		else
+		{
+		panduan3 = 1;
+		$("#email").css("background","white");
+		$("#si").css("color","White");
+		};
+      });
+    });
+	});
+});
+</script>
+<script type="text/javascript">
+        $(document).ready(function() {
+	
+		  $("#jianyy").mouseleave(function(){
+$(this).attr("src","/static/pic/button/submit_1.png");
+})
+$("#jianyy").mouseover(function(){
+$(this).attr("src","/static/pic/button/submit_2.png");
+})
+			
+			$("#side_pic1").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_32.gif");
+})
+$("#side_pic1").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_31.gif");
+})
+				$("#side_pic2").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_12.gif");
+})
+$("#side_pic2").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_11.gif");
+})
+	$("#side_pic3").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_22.gif");
+})
+$("#side_pic3").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_21.gif");
+})
+	$("#side_pic4").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_62.gif");
+})
+$("#side_pic4").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_61.gif");
+})
+	$("#side_pic5").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_42.gif");
+})
+$("#side_pic5").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_41.gif");
+})
+	$("#side_pic6").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_52.gif");
+})
+$("#side_pic6").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_51.gif");
+})
+	$("#side_pic7").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_82.gif");
+})
+$("#side_pic7").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_81.gif");
+})
+	$("#side_pic8").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_72.gif");
+})
+$("#side_pic8").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_71.gif");
+})
+
+
+
+	$("#menu2 li a").wrapInner( '<span class="out"></span>' );
+			
+			$("#menu2 li a").each(function() {
+				$('<span class="over">' +  $(this).text() + '</span>' ).appendTo( this );
+			});
+
+			$("#menu2 li a").hover(function() {
+				$(".out",this).stop().animate({'top':'45px'},200); // 向下滑动 - 隐藏
+				$(".over",this).stop().animate({'top':'0px'},200); // 向下滑动 - 显示
+
+			}, function() {
+				$(".out",this).stop().animate({'top':'0px'},200); // 向上滑动 - 显示
+				$(".over",this).stop().animate({'top':'-55px'},200); // 向上滑动 - 隐藏
+			});
+
+
+
+
+        });
+</script>
+<script type="text/javascript">
+
+function forgetmm()
+{
+ var str=prompt("请输入您注册时使用的邮箱","");
+    if(str)
+    {
+	$("#contact").trigger("click");
+        $.getJSON("/forget/",{yx:str},function(result){
+      sAlert("提示",result.msg);
+	setTimeout("",2000);
+    });
+    }
+
+}
+
+function jianyi(){
+if ($("#jianyik").val() != "")
+{
+$("#jianyi").slideToggle();
+ $.ajax({ 
+ type:"post", 
+ url: "/jianyi/",
+data:{jy:$("#jianyik").val()},
+dataType:"json", 
+ success:function(data){ 
+sAlert("提示","提交成功！");
+	setTimeout("",2000);
+ } 
+ })
+}
+}
+</script>
+  		<script type="text/javascript">
+		
+$().ready(function() {
+ $("#input").validate({
+        rules: {
+   username: {required: true,maxlength:8},
+   email: {
+    required: true,
+    email: true
+   },
+   password: {
+    required: true,
+    minlength: 8,
+	maxlength: 30
+   },
+   sex: {
+   required: true
+   },
+   password2: {
+    required: true,
+    minlength: 8,
+	maxlength: 30,
+    equalTo: "#password"
+   },
+   yzm:{
+	required: true
+	}
+  },
+        messages: {
+	yzm: {required:"请输入验证码"},
+   username: {required : "请输入姓名",maxlength:  "用户名不能大于8个字符"},
+   email: {
+    required: "请输入Email地址",
+    email: "请输入正确的email地址"
+   },
+   sex: {
+   required: "请选择性别"
+   },
+   password: {
+    required: "请输入密码",
+    minlength: jQuery.format("密码不能小于{0}个字 符"),
+	maxlength:  "密码不能大于30个字符"
+   },
+   password2: {
+    required: "请输入确认密码",
+    minlength: "确认密码不能小于8个字符",
+	maxlength: "确认密码不能大于30个字符",
+    equalTo: "两次输入密码不一致不一致"
+   }
+  }
+    });
+});
+
+</script>
+
+<script type="text/javascript">
+var last1 = $("#side_pic1");
+function gonggao(){
+if ($("#side_pic7").css("height") == swidth) {$("#content").attr("src","/gonggao/"+"?a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic7").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic7");
+$("#content").attr("src","/gonggao/"+"?a="+Math.random());
+last="/gonggao/";
+}
+function wenzhang(){
+if ($("#side_pic1").css("height") == swidth) {$("#content").attr("src","/show/?type="+type+"&hh=1"+"&a="+Math.random());return;};
+	last1.animate({height:"50px",width:"50px"});
+    $("#side_pic1").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic1");
+$("#content").attr("src","/show/?type="+type+"&hh=1"+"&a="+Math.random());
+last="/show/?hh=1&type=";
+};
+function zuire(){
+if ($("#side_pic1").css("height") == swidth) {$("#content").attr("src","/show/?type="+type+"&hh=2"+"&a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic1").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic1");
+$("#content").attr("src","/show/?type="+type+"&hh=2"+"&a="+Math.random());
+last="/show/?hh=2&type=";
+}
+function suiji(){
+if ($("#side_pic1").css("height") == swidth) {$("#content").attr("src","/show/?type="+type+"&hh=3"+"&a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic1").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic1");
+$("#content").attr("src","/show/?type="+type+"&hh=3"+"&a="+Math.random());
+last="/show/?hh=3&type=";
+}
+function zhuanti(){
+if ($("#side_pic2").css("height") == swidth) {$("#content").attr("src","/show2/?type="+type+"&a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic2").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic2");
+$("#content").attr("src","/show2/?type="+type+"&a="+Math.random());
+last="/show2/?type=";
+};
+function bangui(){
+if ($("#side_pic8").css("height") == swidth) {$("#content").attr("src","/bangui/"+"?a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic8").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic8");
+$("#content").attr("src","/bangui/"+"?a="+Math.random());
+last="/bangui/?a=";
+}
+</script>
+
+<script type="text/javascript">
+var dj1=0,dj2=0,dj3=0,dj4=0;
+var type=4;
+var last="/show/?hh=1&type=";
+$(document).ready(function() {
+$("#tjy").click(function (){
+var browser=navigator.appName
+
+if(browser=="Microsoft Internet Explorer" )
+
+{
+$("#jianyik").css("height",document.body.clientHeight*0.7);
+}
+$("#jianyi").slideToggle();
+})
+	  $("#tjy").mouseleave(function(){
+$(this).attr("src","/static/pic/button/suggestion_1.png");
+})
+$("#tjy").mouseover(function(){
+$(this).attr("src","/static/pic/button/suggestion_2.png");
+})
+
+$("#btnall").mouseleave(function(){
+if (dj1 == 0){
+$(this).attr("src","/static/pic/button/all_2.png");
+}
+})
+$("#btnall").mouseover(function(){
+if (dj1 == 0){
+$(this).attr("src","/static/pic/button/all_1.png");
+}
+})
+$("#btnbsd").mouseleave(function(){
+if (dj2 == 0){
+$(this).attr("src","/static/pic/button/birth_2.png");
+}
+})
+$("#btnbsd").mouseover(function(){
+if (dj2 == 0){
+$(this).attr("src","/static/pic/button/birth_1.png");
+}
+})
+$("#btnfes").mouseleave(function(){
+if (dj3 == 0){
+$(this).attr("src","/static/pic/button/festival_2.png");
+}
+})
+$("#btnfes").mouseover(function(){
+if (dj3 == 0){
+$(this).attr("src","/static/pic/button/festival_1.png");
+}
+})
+$("#btnday").mouseleave(function(){
+if (dj4 == 0){
+$(this).attr("src","/static/pic/button/daily_2.png");
+}
+})
+$("#btnday").mouseover(function(){
+if (dj4 == 0){
+$(this).attr("src","/static/pic/button/daily_1.png");
+}
+})
+$("#btnall").click(function (){
+$("#btnbsd").attr("src","/static/pic/button/birth_2.png");
+$("#btnfes").attr("src","/static/pic/button/festival_2.png");
+$("#btnday").attr("src","/static/pic/button/daily_2.png");
+$(this).attr("src","/static/pic/button/all_1.png");
+dj2 = 0;dj3 = 0;dj4 = 0;
+dj1 = 1;
+type=4;
+$("#content").attr("src",last+type);
+})
+
+$("#btnbsd").click(function (){
+$("#btnall").attr("src","/static/pic/button/all_2.png");
+$("#btnfes").attr("src","/static/pic/button/festival_2.png");
+$("#btnday").attr("src","/static/pic/button/daily_2.png");
+$(this).attr("src","/static/pic/button/birth_1.png");
+dj1 = 0;dj3 = 0;dj4 = 0;
+dj2 = 1;
+type=1;
+$("#content").attr("src",last+type);
+})
+$("#btnfes").click(function (){
+$("#btnbsd").attr("src","/static/pic/button/birth_2.png");
+$("#btnall").attr("src","/static/pic/button/all_2.png");
+$("#btnday").attr("src","/static/pic/button/daily_2.png");
+$(this).attr("src","/static/pic/button/festival_1.png");
+dj2 = 0;dj1 = 0;dj4 = 0;
+dj3 = 1;
+type=2;
+$("#content").attr("src",last+type);
+})
+$("#btnday").click(function (){
+$("#btnbsd").attr("src","/static/pic/button/birth_2.png");
+$("#btnfes").attr("src","/static/pic/button/festival_2.png");
+$("#btnall").attr("src","/static/pic/button/all_2.png");
+$(this).attr("src","/static/pic/button/daily_1.png");
+dj2 = 0;dj3 = 0;dj1 = 0;
+dj4 = 1;
+type=3;
+$("#content").attr("src",last+type);
+})
+})
+</script>
+
+<script type="text/javascript">
+$.validator.setDefaults({
+errorPlacement: function(error,element){
+error.appendTo(element.parent().next());
+}
+})
+</script>
+<style>
+.menu { height: 5%px; display: block;width:70%; }
+.menu ul { list-style: none; padding: 0; margin-left: 50%;margin-top:-1.7%;*margin-top:0%!important;;  }
+.menu ul li { float: left; /* 菜单子元素的内容超出不可见 */  
+			overflow: hidden; position: relative; text-align: center; line-height: 52px;}
+.menu ul li a { /* 必须是相对定位  */ 
+			position: relative; display: block; width: 130px; height: 42px; font-family: Arial; font-size: 20px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; cursor: pointer; }
+.menu ul li a span { /* 所有层将使用绝对定位 */
+			position: absolute; left: 0; width: 110px; }
+.menu ul li a span.out { top: 0px; }
+.menu ul li a span.over,  .menu ul li a span.bg { /* 起初.over层和.bg层相对a元素-45px以达到隐藏 */  
+			top: -55px; }
+/** 简化版示例 **/
+		
+		#menu2 { background:#0099CC; }
+#menu2 ul li a { color:#FFF; }
+#menu2 ul li a span.over { background: #A6DD00; color:#333; }
+#menu2 ul li.nav4 a span.over { background: #86dbf9; }
+#menu2 ul li.nav5 a span.over { background: #e0caf0; }
+#menu2 ul li.nav6 a span.over { background: #9dace9; }
+</style>
+</head>
+
+<body> 
+<div id="pageOver" style="display:{{ dd2 }};">
+<img id="gd1" src="/static/pic/guide/1.png" style="margin-top:10%;"/>
+<img id="gd2"  src="/static/pic/guide/2.png" style="margin-top:18%;margin-left:15%;display:none;"/>
+<img id="gd3"  src="/static/pic/guide/3.png" style="margin-top:15%;margin-left:50%;display:none;"/>
+<img id="gd4"  src="/static/pic/guide/4.png" style="margin-top:25%;margin-left:30%;display:none;"/>
+<img id="gd5"  src="/static/pic/guide/5.png" style="margin-top:-1%;margin-left:65%;display:none;"/>
+<img id="gd6"  src="/static/pic/guide/6.png" style="margin-top:18%;margin-left:60%;display:none;"/>
+</div>
+<div class="contactArea" id="contactArea1" style="z-index:0;">
+  <form>
+    <div id="info">
+	<table>
+	  <tr><td>
+      <label for="username1">用户名</label></td><td>
+      <input type="text" name="username1" id="username1" value="" size="22" tabindex="5" class="rounded" aria-required='true' /></td><td><label id="yh1"></label></td></tr>
+		<tr><td>
+     <label for="password1">密码</label></td><td>
+	<input id="password1" name="password1" value=""  tabindex="5" type="password" class="rounded"/></td><td><label id="yh2" ></label></td><td><font color="#FFFFFF"><label onclick="forgetmm()" >忘记密码？</label></font></td></tr>
+
+	</table>
+    </div>
+	<input name="submit" type="button" id="submit1" class="rounded" tabindex="5" value="登陆" />
+	</form>
+</div>
+<div class="contactArea" id="contactArea2" style="z-index:-10;">
+  <form id="input">
+    <div id="info">
+	<table >
+	<tr>
+	<td>
+      <label class="cc" for="username">用户名</label></td>
+     <td> <input type="text" name="username" id="username" value="" size="22" tabindex="1" class="rounded" aria-required='true' /></td><td><label id="er"></label></td></tr>
+	 <tr><td><label class="cc">性别</label></td><td><input type="radio" name="sex" value="male" checked="true" id="sex1" style="width:20px;"/> <label >男</label><input type="radio" name="sex" value="female" id="sex2" style="width:20px;" /><label >女</label></td></tr>
+	 <tr>
+	 <td>
+     <label class="cc" for="password">密码</label></td><td>
+	<input id="password" name="password" value=""  tabindex="5" type="password" class="rounded"/></td><td class="status"></td></tr>
+	<tr><td>
+	<label class="cc" for="password2">重复密码</label></td><td>
+	<input id="password2" name="password2" value=""  tabindex="5" type="password" class="rounded"/></td><td class="status"></td></tr>
+	<tr><td>
+		<label class="cc" for="email">邮箱：</label></td><td>
+		<input size="20" type="text" name="email" id="email"   /></td><td class="status"></td><td><label id="si"></label></td></tr>
+		<tr><td>
+		<label class="cc" for="yzm">验证码：</label></td><td>
+		<input size="20" type="text" name="yzm" id="yzm"   /></td><td>
+		<label id="san" >验证码不区分大小写</label></td><td><img src="/validate/"+Math.random() height="15" id="yzmtp" /></td></tr>
+		</table>
+    </div>
+	<input name="submit" type="button" id="signin_submit" class="rounded" tabindex="5" onclick="submittext()" value="注册" />
+	</form>
+</div>
+<img  id="contact" src="/static/pic/login.png"></img> 
+<img  id="contact1" src="/static/pic/signin.png"></img> 
+<div id="container">
+  <div id="header">
+  <img src="/static/pic/logo.png" style="position:absolute;height:8%;width:12%;margin-right:-10%;"/>
+ <div id="menu2" class="menu" style="z-index:1;">
+    <ul>
+        <li class="nav4" onclick="wenzhang()"><a class="tb">最新</a></li>
+      <li class="nav5" onclick="zuire()"><a class="tb">最热</a></li>
+      <li class="nav6" onclick="suiji()"><a class="tb">随机</a></li>
+    </ul>
+  </div>
+  
+  
+
+	</div>
+  
+  <div id="mainContent">
+
+    <div id="sidebar">
+
+ 
+    	<img src="/static/pic/icons/icon_31.gif" class="pic1" id="side_pic1" name="33" onclick="wenzhang()" /><img src="/static/pic/icons/icon_11.gif" class="pic2" id="side_pic2" name="33" onclick="zhuanti()" />
+		 
+    	<img src="/static/pic/icons/icon_21.gif" class="pic1" id="side_pic3" name="33" onclick="alert('请登录！');" /><img src="/static/pic/icons/icon_61.gif" class="pic2" id="side_pic4" name="33" onclick="alert('请登录！');" />
+		 
+    	<img src="/static/pic/icons/icon_41.gif" class="pic1" id="side_pic5" name="33" onclick="alert('请登录！');" /><img src="/static/pic/icons/icon_51.gif" class="pic2" id="side_pic6" name="33" onclick="alert('请登录！');" />
+		 
+    	<img src="/static/pic/icons/icon_81.gif" class="pic1" id="side_pic7" name="33" onclick="gonggao();" /><img src="/static/pic/icons/icon_71.gif" class="pic2" id="side_pic8" name="33" onclick="bangui()" />
+    </div>
+	<img src="/static/pic/fg1.png" style="float:left;height:100%;width:1%;"/>
+	<div id="choose" >
+<img id="btnall" class="btn4" src="/static/pic/button/all_2.png"/>
+		<img id="btnbsd" class="btn4" src="/static/pic/button/birth_2.png"/>
+		<img id="btnfes" class="btn4" src="/static/pic/button/festival_2.png"/>
+		<img id="btnday" class="btn4" src="/static/pic/button/daily_2.png"/>
+	</div>
+    <div style="float:left;width:60%;">
+	
+	<iframe id="content" frameborder=0 src="" allowtransparency="true"  style="background-color:transparent;display:none;"></iframe>
+	</div>
+	<div style="float:right;z-index:200;display:none;width:10%;overflow:hidden;" id="jj">
+	<img id="tjy" src="/static/pic/button/suggestion_1.png" style="width:100%;"/>
+	<div id="jianyi" style="display:none;">
+	<div>
+	<textarea id="jianyik" style="height:70%;width:95%;"></textarea></div>
+	<img id="jianyy" onclick="jianyi()" class="img5" src="/static/pic/button/submit_1.png" style="float:right;"/>
+	</div>
+	</div>
+	</div>
+  <div id="footer"><div style="float:right;"><span><font size=2 color=#FFFFFF >综合咨询：</font></span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=815427601&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:815427601:41" alt="点击这里给我发消息" title="点击这里给我发消息"></a></div>
+  <div style="float:right;"><span><font size=2 color=#FFFFFF >业务咨询：</font></span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=309203850&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:309203850:41" alt="点击这里给我发消息" title="点击这里给我发消息"></a></div></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+$("#yzmtp").attr("src","/validate/");
+$("#gd1").click(function (){
+$(this).css("display","none");
+$("#gd2").css("display","");
+});
+$("#gd2").click(function (){
+$(this).css("display","none");
+$("#gd3").css("display","");
+});
+$("#gd3").click(function (){
+$(this).css("display","none");
+$("#gd4").css("display","");
+});
+$("#gd4").click(function (){
+$(this).css("display","none");
+$("#gd5").css("display","");
+});
+$("#gd5").click(function (){
+$(this).css("display","none");
+$("#gd6").css("display","");
+});
+$("#gd6").click(function (){
+$(this).css("display","none");
+ $.ajax({ 
+ type:"get", 
+ url: "/guide/"
+ });
+$("#pageOver").remove();
+});
+
+var iframe = document.getElementById("content");
+wenzhang();
+$("#btnall").trigger("click");
+if (iframe.attachEvent){
+    iframe.attachEvent("onload", function(){
+         $("#content").css("display","");
+		 $("#jj").css("display","");
+    });
+} else {
+    iframe.onload = function(){
+        $("#content").css("display","");
+		$("#jj").css("display","");
+    };
+}
+});
+
+</script>
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22cfa18f88a971cf58f97da7b729d25d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+
+</body>
+
+
+
+
+
+</html>

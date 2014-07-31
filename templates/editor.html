@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
+“http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml” >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/salert.js"></script>
+<link href="/static/css/wenzhang.css" rel="stylesheet" type="text/css" /> 
+ <script type="text/javascript">
+ window.UEDITOR_HOME_URL = "/static/ueditor/"</script>
+ <link  type="text/css"  rel="stylesheet" href="/static/ueditor/themes/default/ueditor.css" />   
+  <script type="text/javascript" src="/static/ueditor/editor_all_min.js" ></script>   
+  <script type="text/javascript" src="/static/ueditor/editor_config.js" ></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	  $("#submittext1").mouseleave(function(){
+$(this).attr("src","/static/pic/button/submit_1.png");
+})
+$("#submittext1").mouseover(function(){
+$(this).attr("src","/static/pic/button/submit_2.png");
+})
+	  $("#back").mouseleave(function(){
+$(this).attr("src","/static/pic/button/back_1.png");
+})
+$("#back").mouseover(function(){
+$(this).attr("src","/static/pic/button/back_2.png");
+})
+
+$("#back").click(function (){
+history.go(-1);
+})
+
+
+
+
+	 $("#yzm").focus(function(){
+	$(this).addClass("focus");
+	}).blur(function(){
+	 $.getJSON("/yzm/",{yzm:$("#yzm").val()},function(result){
+      $.each(result, function(i, field){
+		if ($("#yzm").val() != ""){
+		$("#san").html("");
+        $("#san").html(field);};
+		if (field == "验证码错误")
+		{
+		panduan = 0;
+		$("#yzmtp").attr("src","/validate/?a="+Math.random());
+		$("#yzm").css("background","red");
+		}
+		else
+		{
+		panduan = 1;
+		$("#yzm").css("background","white");
+		};
+      });
+    });
+	})
+	})
+</script>
+</head><body style="background-color:transparent">
+<div style="overflow:hidden;">
+<div >
+<div id="div1" style="width:84%;">
+<table>
+<tr>
+<td><label><b>标题:</b></label><input style="width:80%;" type="text" id="title" /></td>
+</tr>
+<tr>
+<td><label><b>类型:</b></label><select id="leixing"><option id="1">纪念日、生日</option><option id="2">节日</option><option id="3">日常</option></select></td>
+</tr>
+<tr><td><b>请输入验证码：</b>
+		<input size="20" type="text" name="yzm" id="yzm"   /><img src="/validate/"+Math.random() height="20" width="80" id="yzmtp" /></td><td><label id="san">验证码不区分大小写</label></td></tr>
+</table>
+</div>
+<div id="ueditor1">
+{{ form.myContent }}
+ </div>
+ <script type="text/javascript">
+ var panduan = 0;
+ $(document).ready(function (){
+ $("#submittext1").click(function (){
+xmlhttp=null;
+  // code for Firefox, Opera, IE7, etc.
+  xmlhttp=new XMLHttpRequest();
+if (xmlhttp!=null)
+  {
+  if (document.getElementById("title").value.length > 40) {sAlert("提示","标题不能大于40个字符！");
+	setTimeout("",2000);return;}
+  if (editor.getContent() == ""){sAlert("提示","内容不能为空！");
+	setTimeout("",2000);return;}
+  else if(document.getElementById("title").value == ""){sAlert("提示","标题不能为空！");
+	setTimeout("",2000);return;}
+  else if (panduan == 0 ){ sAlert("提示","验证码错误！");
+	setTimeout("",2000);return;}
+  else{
+	$(this).slideToggle();
+   $.ajax({ 
+ type:"post", 
+ url: "/newarticle/", 
+ data:{
+ TEXT:editor.getContent(),
+ TITLE:document.getElementById("title").value,
+ TYPE:$("#leixing").val()
+ },
+ dataType:"json",
+ success:function state_Change()
+{
+   sAlert("提示","提交成功！");
+	setTimeout("window.location=\"http://www.langman1dian.com/show/?a=\"+Math.random()+\"&hh=\"+{{ hh|escape }};",2000); 
+}
+ })
+  }}
+else
+  {
+  alert("Your browser does not support XMLHTTP.");
+  }
+   })
+ })
+</script>
+</div>
+<div id="youce" class="img5" >
+<img id="back" class="img5" src="/static/pic/button/back_1.png" />
+</div>
+</div>
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22cfa18f88a971cf58f97da7b729d25d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>
+</html>

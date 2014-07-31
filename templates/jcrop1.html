@@ -1,0 +1,80 @@
+    <script src="/static/js/jquery.js" type="text/javascript"></script>  
+    <script src="/static/js/jquery.Jcrop.min.js" type="text/javascript"></script>  
+<link href="/static/css/jquery.Jcrop.css" rel="stylesheet" type="text/css" /> 
+	<script type="text/javascript">
+	    var MAXWIDTH = 500;  
+    var MAXHEIGHT = 400;  
+    var JCROPRATIO = 1;//这个属性主要是确定选择框的横纵比  
+    jQuery(function($){  
+        var jcrop_api;  
+        $('#avatar').find("img:eq(0)").Jcrop({  
+				setSelect:[0,0,400,400],
+                aspectRatio: JCROPRATIO,  
+                onChange:   showCoords,  
+                onSelect:   showCoords,  
+                onRelease:  clearCoords  
+            },function(){  
+                jcrop_api = this;  
+       })
+          
+      
+            var image = document.getElementById('123');  
+            var width = MAXWIDTH;  
+            var height = MAXHEIGHT;  
+            $("#avatar").css('max-width',MAXWIDTH);  
+            $("#avatar").css('max-height',MAXHEIGHT);  
+            $("#avatar").css('width',MAXWIDTH);  
+            $("#avatar").css('height',MAXHEIGHT);  
+            $("#avatar").css('overflow','hidden');  
+              
+
+   
+        
+            
+       
+      	})    
+      
+    function showCoords(c){  
+        $('#x1').val(c.x);  
+        $('#y1').val(c.y);  
+        $('#x2').val(c.x2);  
+        $('#y2').val(c.y2);  
+        $('#w').val(c.w);  
+        $('#h').val(c.h);  
+		if(parseInt(c.w) > 0){ 
+		var rx = $("#preview_box").width() / c.w; 
+		var ry = $("#preview_box").height() / c.h; 
+		$("#crop_preview").css({ 
+		width:Math.round(rx * $("#123").width()) + "px",
+		height:Math.round(rx * $("#123").height()) + "px",
+		marginLeft:"-" + Math.round(rx * c.x) + "px", 
+		marginTop:"-" + Math.round(ry * c.y) + "px" }); }
+    };  
+      
+    function clearCoords(){  
+        $('#x1').val('');  
+        $('#y1').val('');  
+        $('#x2').val('');  
+        $('#y2').val('');  
+        $('#w').val('');  
+        $('#h').val('');  
+    };
+	</script>
+	<body style="background-color:transparent">
+    <div id="avatar"><img id="123" src="{{ url1|escape }}"/></div>  
+	<form action="/caijian/" method="post"> 
+    <div style="display:none;">  
+        <label>X1 <input type="text" size="4" id="x1" name="x1" /></label>  
+        <label>Y1 <input type="text" size="4" id="y1" name="y1" /></label>  
+        <label>X2 <input type="text" size="4" id="x2" name="x2" /></label>  
+        <label>Y2 <input type="text" size="4" id="y2" name="y2" /></label>  
+        <label>W <input type="text" size="4" id="w" name="w" /></label>  
+        <label>H <input type="text" size="4" id="h" name="h" /></label> 
+				<input type="text" name="path1" value="{{ url1|escape }}"/>
+    </div> 
+		<input type="submit" value="确认">
+	</form>
+	<span id="preview_box" class="crop_preview" >
+<img id="crop_preview" src="{{ url1|escape }}">
+</span>
+	</body>

@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
+“http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml” >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/js/salert.js"></script>
+<script src="/static/js/jquery.mousewheel.min.js"></script>
+<script src="/static/js/jquery.mCustomScrollbar.js"></script>
+
+<link href="/static/css/wenzhang.css" rel="stylesheet" type="text/css" /> 
+<link href="/static/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+</head><body>
+	  <script type="text/javascript">
+$(document).ready(function(){
+	  $("#xinjian").mouseleave(function(){
+$(this).attr("src","/static/pic/button/new_1.png");
+})
+$("#xinjian").mouseover(function(){
+$(this).attr("src","/static/pic/button/new_2.png");
+})
+	  $("#shanchu").mouseleave(function(){
+$(this).attr("src","/static/pic/button/delete_1.png");
+})
+$("#shanchu").mouseover(function(){
+$(this).attr("src","/static/pic/button/delete_2.png");
+})
+ $("#gaiming").mouseleave(function(){
+$(this).attr("src","/static/pic/button/rename_1.png");
+})
+$("#gaiming").mouseover(function(){
+$(this).attr("src","/static/pic/button/rename_2.png");
+})
+$("#xinjian").click(function(){
+pp=0;
+if ($("#shanchub").css("display")!="none"){pp=1;$("#shanchub").slideToggle(function (){$("#xinjian2").slideToggle();});};
+if ($("#gaimingb").css("display")!="none"){pp=1;$("#gaimingb").slideToggle(function (){$("#xinjian2").slideToggle();});};
+if (pp !=1){
+$("#xinjian2").slideToggle();}
+})
+
+$("#xinjian3").click(function(){
+ppp=1;
+$("#gaimingbiao").children().each(function (){if ($(this).text() == $("#xinming").val()){sAlert("提示","与现有文件夹同名！");ppp=0;}});
+if ($("#xinming").val() == ""){
+sAlert("提示","请输入文件夹名称！");
+	setTimeout("",2000); 
+}
+else{
+if (ppp==1){
+$("#xinjian").trigger("click");
+   $.ajax({ 
+ type:"get", 
+ url: "/newshoucang/", 
+ data:{name:$("#xinming").val()},
+ success:function(data){ 
+sAlert("提示","新建成功！");
+	setTimeout("window.location=\"http://www.langman1dian.com/shoucang/?a=\"+Math.random();",2000); 
+ }  
+ });}}
+})
+
+$("#shanchu").click(function(){
+pp=0;
+if ($("#xinjian2").css("display")!="none"){pp=1;$("#xinjian2").slideToggle(function (){$("#shanchub").slideToggle();});};
+if ($("#gaimingb").css("display")!="none"){pp=1;$("#gaimingb").slideToggle(function (){$("#shanchub").slideToggle();});};
+if (pp !=1){
+$("#shanchub").slideToggle();}
+})
+
+$("#shanchubtn").click(function(){
+if ($("#shanchubiao").val() == null){
+sAlert("提示","请选择要删除的文件夹！");
+	setTimeout("",2000); 
+}
+else{
+$("#shanchu").trigger("click");
+   $.ajax({ 
+ type:"get", 
+ url: "/delshoucang/", 
+ data:{name:$("#shanchubiao").val().toString()},
+ success:function(data){ 
+sAlert("提示","删除成功！");
+	setTimeout(" window.location=\"http://www.langman1dian.com/shoucang/?a=\"+Math.random();",2000); 
+ }  
+ });
+ }
+})
+
+$("#gaiming").click(function(){
+pp=0;
+if ($("#shanchub").css("display")!="none"){pp=1;$("#shanchub").slideToggle(function (){$("#gaimingb").slideToggle();});};
+if ($("#xinjian2").css("display")!="none"){pp=1;$("#xinjian2").slideToggle(function (){$("#gaimingb").slideToggle();});};
+if (pp !=1){
+$("#gaimingb").slideToggle();}
+})
+
+$("#gaimingbtn").click(function(){
+if ($("#gaimingbiao").val() == null){
+sAlert("提示","请选择要改名的文件夹！");
+	setTimeout("",2000); 
+}
+else if($("#gaimingc").val() == "")
+{
+sAlert("提示","新名称不能为空！");
+	setTimeout("",2000); 
+}
+else{
+ppp=1;
+$("#gaimingbiao").children().each(function (){if ($(this).text() == $("#gaimingc").val()){sAlert("提示","与现有文件夹同名！");ppp=0;}});
+if (ppp!=0){
+$("#gaiming").trigger("click");
+ $.ajax({ 
+ type:"get", 
+ url: "/changeshoucang/", 
+ data:{name1:$("#gaimingbiao").val().toString(),name2:$("#gaimingc").val()},
+ success:function(data){ 
+ sAlert("提示","改名成功！");
+	setTimeout("window.location=\"http://www.langman1dian.com/shoucang/?a=\"+Math.random();",2000);
+ }  
+ });}}
+})
+  $(".aa").click(function(){
+window.location="http://www.langman1dian.com/shoucang2/?type="+$(this).find("p").text();
+ })
+  });
+</script>
+<style>
+.aa:hover{
+cursor:pointer;
+}
+</style>
+<div id="dd2" style="display:none;overflow:hidden;">
+<div id="content_1" class="content" style="margin-left:1%;">
+{% for  post in posts.object_list %} 
+<div class="aa" style="width:30%;float:left;">
+<img src="/static/pic/file.png" />
+<p class="wz" style="display:block;">{{ post.title }}</p> 
+</div> 
+   {% endfor %} 
+    <div class="pageli" style="display:none;">  
+   <div class="pagination"> 
+   <span class="step-links"> 
+   {% if posts.has_previous %} 
+   <a href="?page={{ posts.previous_page_number|escape }}">previous</a> 
+   {% endif %} 
+   
+   <span class="current"> 
+   Page {{ posts.number|escape }} of {{  posts.paginator.num_pages|escape }}. 
+   </span> 
+   
+   {% if posts.has_next %} 
+   <a href="?page={{ posts.next_page_number|escape }}&hh={{ hh|escape }}" class="nextpage">next</a> 
+   <a id="nextpage2" >next</a> 
+   {% else %}
+   <a href="" class="nextpage">next</a> 
+   <a id="nextpage2" >next</a>
+   {% endif %} 
+   </span> 
+   </div> 
+   </div> 
+ <img id="loading2" src="/static/pic/loading2.gif" style="width:30px;height:30px;margin-left:45%;visibility:hidden;">
+</div>
+
+<div id="youce" >
+<img id="xinjian" class="img5" src="/static/pic/button/new_1.png" />
+
+<img id="gaiming" class="img5" src="/static/pic/button/rename_1.png" />
+
+<img id="shanchu" class="img5" src="/static/pic/button/delete_1.png" />
+
+</div>
+<script>
+			$(document).ready(function(){
+			$("#dd2").css("display","");
+				$("#content_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					},
+					callbacks:{
+    onTotalScroll: function(){
+	 var href = $(".nextpage").attr("href"); 
+			 if (href!=""){
+			 $("#loading2").css("visibility","");
+			 $(".nextpage").attr("href","");
+ $.ajax({ 
+ type:"get", 
+ url: href, 
+ success:function(data){ 
+ $("#loading2").remove();
+ var html1=$(data).find(".content").html();
+ $(".pageli").remove(); 
+ $(".content .mCSB_container").append(html1); 
+ $(".content").mCustomScrollbar("update");
+  $(".aa").click(function(){
+window.location="http://www.langman1dian.com/shoucang2/?type="+$(this).find("p").text();
+ })
+ } 
+ })}
+	}
+}
+				});
+			});
+	</script>
+</div>
+<div id="xinjian2" style="background:#7BBFEA;height:100px;width:220px;display:none;position:absolute;top:30%;left:30%;z-index:1000;padding:10px;border-style:outset;">
+<input id="xinming" type="text" value="在此输入新建收藏夹的名字" size=29/>
+<input id="xinjian3" type="button" value="新建" style="float:right;">
+</div>
+<div id="gaimingb" style="background:#7BBFEA;height:100px;width:220px;display:none;position:absolute;top:30%;left:30%;z-index:1000;padding:10px;border-style:outset;">
+<select id="gaimingbiao" >
+{% for  post in posts.object_list %} 
+  <option>{{ post.title|escape }}</option>
+     {% endfor %} 
+</select>
+<input id="gaimingc" value="在此输入新名字" />
+<input id="gaimingbtn" type="button" value="改名" />
+</div>
+<div id="shanchub" style="background:#7BBFEA;height:100px;width:220px;display:none;position:absolute;top:30%;left:30%;z-index:1000;padding:10px;border-style:outset;">
+<select multiple="multiple" size="5" id="shanchubiao" style="width:140px;">
+{% for  post in posts.object_list %} 
+  <option>{{ post.title|escape }}</option>
+     {% endfor %} 
+</select>
+<input id="shanchubtn" type="button" value="删除" />
+</div>
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22cfa18f88a971cf58f97da7b729d25d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>

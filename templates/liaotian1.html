@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
+“http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml” >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script src="/static/js/jquery.mousewheel.min.js"></script>
+<script src="/static/js/jquery.mCustomScrollbar.js"></script>
+
+<link href="/static/css/wenzhang.css" rel="stylesheet" type="text/css" /> 
+<link href="/static/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+</head><body>
+  <script type="text/javascript" language="javascript">
+  var t1,t2;
+      $(document).ready(function (){
+	  
+	  			var browser=navigator.appName;
+$("#content_1").css("height",document.body.clientHeight*0.6);
+if(browser=="Microsoft Internet Explorer" ){
+$("#content_1").css("height",screen.height*0.4);
+}
+	  
+	  $("#send").click(	  function (){
+	  if ($("#shuru").val() == ""){ return;}; 
+	   $.post("/liaotian1/",{fangfa:'1',hua:$("#shuru").val()},function(result){
+      $(".content .mCSB_container").append("<p><font color='blue'>我："+$("#shuru").val()+"</font></p>"); 
+ $(".content").mCustomScrollbar("update");
+ $("#shuru").val("");
+	  })
+	  })
+		$("#start").click(function(){
+		$(this).css("display","none");
+		$("#duankai").css("display","");
+		$(".content .mCSB_container").append("<p>正在配对。。。</p>"); 
+ $(".content").mCustomScrollbar("update");
+$.post("/liaotian1/",{fangfa:'2'},function(result){
+      if (result.msg=="配对成功"){
+	 $(".content .mCSB_container").append("<p>配对成功！您可以开始聊天了！</p>"); 
+ $(".content").mCustomScrollbar("update");
+	  document.getElementById('send').removeAttribute('disabled');
+	  t2 = setTimeout("jiance()",2000);
+	  }
+	  else {t1 = setTimeout("peidui()",2000)};
+    },"json");
+		})
+				$("#duankai").click(function (){  
+				$(this).css("display","none");
+		$("#start").css("display","");
+	  $.post("/liaotian1/",{fangfa:'3'},function(result){
+      $(".content .mCSB_container").append("<p>您已断开连接！</p>"); 
+ $(".content").mCustomScrollbar("update");
+	  window.clearTimeout(t2);
+	   window.clearTimeout(t1);
+	  })
+	  });
+
+		
+      });
+	  
+	  function peidui(){
+	  $.post("/liaotian1/",{fangfa:'2'},function(result){
+      if (result.msg=="配对成功"){
+	  $(".content .mCSB_container").append("<p>配对成功！您可以开始聊天了！</p>"); 
+ $(".content").mCustomScrollbar("update");
+	  document.getElementById('send').removeAttribute('disabled');
+	  t2 = setTimeout("jiance()",2000);
+	  window.clearTimeout(t1);
+	  }
+	  else
+	  {
+	  t1 = setTimeout("peidui()",2000);
+	  }
+    },"json");
+	  }
+	  
+	  function jiance(){
+	    $.post("/liaotian1/",{fangfa:'2'},function(result){
+      if (result.msg=="断开"){
+	$(".content .mCSB_container").append("<p>对方已断开连接！</p>"); 
+ $(".content").mCustomScrollbar("update");
+	$("#send").attr("disabled","disabled");
+	 $("#duankai").css("display","none");
+		$("#start").css("display","");
+	  window.clearTimeout(t2);
+	  }
+	  else if(result.msg != "" )
+	  {
+	   $.each(result.msg, function(i, field){
+	
+		$(".content .mCSB_container").append("<p><font color='red'>对方："+field+"</font></p>"); 
+ $(".content").mCustomScrollbar("update");
+      });
+	  t2 = setTimeout("jiance()",2000);
+	  }
+	  else if(result.msg == ""){
+	  t2 = setTimeout("jiance()",2000);}
+	  },"json")}
+	  
+
+
+	  
+      </script>
+<style>
+#start,#duankai,#send:hover{
+cursor:pointer;
+}
+</style>
+
+
+
+<div id="div1" style="overflow-y:auto; overflow-x:hidden; margin-left:20px;">
+ <div id="content_1" class="content" style="width:98%;background-color:#FFFFFF;margin-bottom:10px;">
+ <p>欢迎使用随机聊天功能~</p>
+ <p>点击开始聊天进行配对</p>
+   </div>
+   <p>当前在线人数：{{ rs1 }}</p>
+   <div id="ltq">
+   <img class="lt" id="start" src="/static/pic/icons/start_chat.png"/>
+   <img id="duankai"   src="/static/pic/icons/break.png" style="display:none;"/>
+   <textarea id="shuru" style="width:300px;height:100px;" ></textarea>
+   <img id="send" onclick="send()"  src="/static/pic/icons/send.png"/>
+   <script type="text/javascript">
+			$(document).ready(function(){
+				$("#content_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+			});
+	</script>
+	</div>
+</div>
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22cfa18f88a971cf58f97da7b729d25d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>

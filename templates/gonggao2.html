@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
+“http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml” >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/js/salert.js"></script>
+<script src="/static/js/jquery.mousewheel.min.js"></script>
+<script src="/static/js/jquery.mCustomScrollbar.js"></script>
+
+<link href="/static/css/wenzhang.css" rel="stylesheet" type="text/css" /> 
+<link href="/static/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+
+ <script type="text/javascript">
+ window.UEDITOR_HOME_URL = "/static/ueditor/"</script>
+ <link  type="text/css"  rel="stylesheet" href="/static/ueditor/themes/default/ueditor.css" />   
+  <script type="text/javascript" src="/static/ueditor/editor_all_min.js" ></script>   
+  <script type="text/javascript" src="/static/ueditor/editor_config.js" ></script>
+</head><body>
+  <script type="text/javascript" language="javascript">
+  var browser=navigator.appName;
+      $(document).ready(function (){
+	  $("#back").mouseleave(function(){
+$(this).attr("src","/static/pic/button/back_1.png");
+})
+$("#back").mouseover(function(){
+$(this).attr("src","/static/pic/button/back_2.png");
+})
+$("#back").click(function (){
+history.go(-1);
+})	  
+
+	  $("#fresh").mouseleave(function(){
+$(this).attr("src","/static/pic/button/refresh_1.png");
+})
+$("#fresh").mouseover(function(){
+$(this).attr("src","/static/pic/button/refresh_2.png");
+})
+
+	  $("#guanzhu1").mouseleave(function(){
+$(this).attr("src","/static/pic/button/attention_1.png");
+})
+$("#guanzhu1").mouseover(function(){
+$(this).attr("src","/static/pic/button/attention_2.png");
+})
+	 
+$("#fresh").click(function(){
+location.reload();
+})	  
+
+$("#guanzhu1").click(function(){
+$.getJSON("/guanzhu1/",{id:document.getElementById('zuozhe').textContent},function(result){
+      if (result.msg=="成功"){sAlert("提示","关注成功！");
+	setTimeout("$(\"#guanzhu1\").remove();",2000);}
+	  else {sAlert("提示","关注失败！");
+	setTimeout("",2000);}
+    });
+})
+
+      });
+      </script>
+
+
+
+<div id="dd1" style="width:98%;position:absolute;overflow:hidden;display:none;">
+<div id="content_1" class="content">
+{% autoescape off %} 
+{% ifequal author1.sex 'male' %}
+<div class="typeHolder1" style="background-color:#7bbfea;">
+<div id="zuo1" style="width:80%;float:left;margin-left:1%;">
+ <p style="display:none" id="id1">{{ id1|escape }}</p>
+  <font size="3" color="#FFFFFF"><p>{{ date1|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;&nbsp;{{ date1|date:"H:i:s" }}</p></font>
+    <p id="zuozhe" ><img style="width:50px;height:50px;" src="{{ author1.iconaddress }}"/><span onclick="window.location='/geren2/?name={{ author1 }}'" id="mingz" style="display:block;color:#{{ author1.color }};">{{ author1|escape }}</span></p>
+ <p id="wenzhang1"><font size="6"><b>{{ title1|escape }}</b></font></p>
+ <p>{{ text1 }}</p>
+ </div>
+ 
+ <div id="you1" style="width:19%;float:left;">
+<img id="guanzhu1" class="img5" style="float:right;display:{{ display1 }};margin:0;" src="/static/pic/button/attention_1.png" />
+ </div>
+ <img id="line2" src="/static/pic/button/line1.png" />
+</div>
+{% endifequal %}
+{% ifequal author1.sex 'female' %}
+<div class="typeHolder1" style="background-color:#FF9791;">
+<div id="zuo1" style="width:80%;float:left;margin-left:1%;">
+ <p style="display:none" id="id1">{{ id1|escape }}</p>
+ <font size="3" color="#FFFFFF"><p>{{ date1|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;&nbsp;{{ date1|date:"H:i:s" }}</p></font>
+    <p id="zuozhe" ><img style="width:50px;height:50px;" src="{{ author1.iconaddress }}"/><span onclick="window.location='/geren2/?name={{ author1 }}'" id="mingz" style="display:block;color:#{{ author1.color }};">{{ author1|escape }}</span></p>
+ <p id="wenzhang1"><font size="6"><b>{{ title1|escape }}</b></font></p>
+ <p>{{ text1 }}</p>
+ </div>
+ <div id="you1" style="width:19%;float:left;">
+<img id="guanzhu1" class="img5" style="float:right;display:{{ display1 }};margin:0;" src="/static/pic/button/attention_1.png" />
+ </div>
+ <img id="line2" src="/static/pic/button/line1.png" />
+</div>
+{% endifequal %}
+{% endautoescape %} 
+<div id="youce" class="img5" >
+<img id="fresh" class="img5" src="/static/pic/button/refresh_1.png" />
+<img id="back" class="img5" src="/static/pic/button/back_1.png" />
+</div>
+<script>
+			$(document).ready(function(){
+			$("#dd1").css("display","");
+				$("#content_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+				 
+			});
+	</script>
+</div>
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22cfa18f88a971cf58f97da7b729d25d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+
+</body>

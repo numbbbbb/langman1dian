@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
+“http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml” >
+
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>浪漫1点----最大的浪漫点子聚集地</title>
+<link rel="shortcut icon" href="/static/pic/icon.jpg">
+<link href="/static/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/wenzhang.css" rel="stylesheet" type="text/css" /> 
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/salert.js"></script>
+<script type="text/javascript">
+var dj1=0,dj2=0,dj3=0,dj4=0;
+var swidth;
+$(document).ready(function() {
+swidth = $("#sidebar").css("width");
+$("#logout").click(function(){
+$.getJSON("/logout/",function(result){
+      window.location="http://www.langman1dian.com/?a="+Math.random();
+    });
+})
+
+$("#tjy").click(function (){
+var browser=navigator.appName
+
+if(browser=="Microsoft Internet Explorer" )
+
+{
+$("#jianyik").css("height",document.body.clientHeight*0.7);
+}
+$("#jianyi").slideToggle();
+})
+ $("#tjy").mouseleave(function(){
+$(this).attr("src","/static/pic/button/suggestion_1.png");
+})
+$("#tjy").mouseover(function(){
+$(this).attr("src","/static/pic/button/suggestion_2.png");
+})
+
+$("#btnall").mouseleave(function(){
+if (dj1 == 0){
+$(this).attr("src","/static/pic/button/all_2.png");
+}
+})
+$("#btnall").mouseover(function(){
+if (dj1 == 0){
+$(this).attr("src","/static/pic/button/all_1.png");
+}
+})
+$("#btnbsd").mouseleave(function(){
+if (dj2 == 0){
+$(this).attr("src","/static/pic/button/birth_2.png");
+}
+})
+$("#btnbsd").mouseover(function(){
+if (dj2 == 0){
+$(this).attr("src","/static/pic/button/birth_1.png");
+}
+})
+$("#btnfes").mouseleave(function(){
+if (dj3 == 0){
+$(this).attr("src","/static/pic/button/festival_2.png");
+}
+})
+$("#btnfes").mouseover(function(){
+if (dj3 == 0){
+$(this).attr("src","/static/pic/button/festival_1.png");
+}
+})
+$("#btnday").mouseleave(function(){
+if (dj4 == 0){
+$(this).attr("src","/static/pic/button/daily_2.png");
+}
+})
+$("#btnday").mouseover(function(){
+if (dj4 == 0){
+$(this).attr("src","/static/pic/button/daily_1.png");
+}
+})
+$("#btnall").click(function (){
+$("#btnbsd").attr("src","/static/pic/button/birth_2.png");
+$("#btnfes").attr("src","/static/pic/button/festival_2.png");
+$("#btnday").attr("src","/static/pic/button/daily_2.png");
+$(this).attr("src","/static/pic/button/all_1.png");
+dj2 = 0;dj3 = 0;dj4 = 0;
+dj1 = 1;
+type=4;
+$("#content").attr("src",last+type);
+})
+
+$("#btnbsd").click(function (){
+$("#btnall").attr("src","/static/pic/button/all_2.png");
+$("#btnfes").attr("src","/static/pic/button/festival_2.png");
+$("#btnday").attr("src","/static/pic/button/daily_2.png");
+$(this).attr("src","/static/pic/button/birth_1.png");
+dj1 = 0;dj3 = 0;dj4 = 0;
+dj2 = 1;
+type=1;
+$("#content").attr("src",last+type);
+})
+$("#btnfes").click(function (){
+$("#btnbsd").attr("src","/static/pic/button/birth_2.png");
+$("#btnall").attr("src","/static/pic/button/all_2.png");
+$("#btnday").attr("src","/static/pic/button/daily_2.png");
+$(this).attr("src","/static/pic/button/festival_1.png");
+dj2 = 0;dj1 = 0;dj4 = 0;
+dj3 = 1;
+type=2;
+$("#content").attr("src",last+type);
+})
+$("#btnday").click(function (){
+$("#btnbsd").attr("src","/static/pic/button/birth_2.png");
+$("#btnfes").attr("src","/static/pic/button/festival_2.png");
+$("#btnall").attr("src","/static/pic/button/all_2.png");
+$(this).attr("src","/static/pic/button/daily_1.png");
+dj2 = 0;dj3 = 0;dj1 = 0;
+dj4 = 1;
+type=3;
+$("#content").attr("src",last+type);
+})
+var browser=navigator.appName
+
+if(browser=="Microsoft Internet Explorer" )
+
+{
+
+   $(".aa").css("height",document.body.clientHeight*0.085);
+$(".aa").css("width",document.body.clientWidth*0.11);
+}
+else{
+$(".aa").css("height",document.body.clientHeight*0.072);
+$(".aa").css("width",document.body.clientWidth*0.11);}
+
+	$("#menu2 li a").wrapInner( '<span class="out"></span>' );
+			
+			$("#menu2 li a").each(function() {
+				$('<span class="over">' +  $(this).text() + '</span>' ).appendTo( this );
+			});
+
+			$("#menu2 li a").hover(function() {
+				$(".out",this).stop().animate({'top':'55px'},200); // 向下滑动 - 隐藏
+				$(".over",this).stop().animate({'top':'0px'},200); // 向下滑动 - 显示
+
+			}, function() {
+				$(".out",this).stop().animate({'top':'0px'},200); // 向上滑动 - 显示
+				$(".over",this).stop().animate({'top':'-55px'},200); // 向上滑动 - 隐藏
+			});
+
+		  $("#jianyy").mouseleave(function(){
+$(this).attr("src","/static/pic/button/submit_1.png");
+})
+$("#jianyy").mouseover(function(){
+$(this).attr("src","/static/pic/button/submit_2.png");
+})
+
+$("#side_pic1").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_32.gif");
+})
+$("#side_pic1").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_31.gif");
+})
+				$("#side_pic2").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_12.gif");
+})
+$("#side_pic2").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_11.gif");
+})
+	$("#side_pic3").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_22.gif");
+})
+$("#side_pic3").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_21.gif");
+})
+	$("#side_pic4").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_62.gif");
+})
+$("#side_pic4").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_61.gif");
+})
+	$("#side_pic5").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_42.gif");
+})
+$("#side_pic5").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_41.gif");
+})
+	$("#side_pic6").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_52.gif");
+})
+$("#side_pic6").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_51.gif");
+})
+	$("#side_pic7").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_82.gif");
+})
+$("#side_pic7").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_81.gif");
+})
+	$("#side_pic8").mouseover(function(){
+$(this).attr("src","/static/pic/icons/icon_72.gif");
+})
+$("#side_pic8").mouseleave(function(){
+$(this).attr("src","/static/pic/icons/icon_71.gif");
+})
+})
+</script>
+<script type="text/javascript">
+var last1 = $("#side_pic1");
+function wenzhang(){
+if ($("#side_pic1").css("height") == swidth) {$("#content").attr("src","/show/?type="+type+"&hh=1"+"&a="+Math.random());return;};
+	last1.animate({height:"50px",width:"50px"});
+    $("#side_pic1").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic1");
+$("#content").attr("src","/show/?type="+type+"&hh=1"+"&a="+Math.random());
+last="/show/?hh=1&type=";
+};
+function zuire(){
+if ($("#side_pic1").css("height") == swidth) {$("#content").attr("src","/show/?type="+type+"&hh=2"+"&a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic1").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic1");
+$("#content").attr("src","/show/?type="+type+"&hh=2"+"&a="+Math.random());
+last="/show/?hh=2&type=";
+}
+function suiji(){
+if ($("#side_pic1").css("height") == swidth) {$("#content").attr("src","/show/?type="+type+"&hh=3"+"&a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic1").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic1");
+$("#content").attr("src","/show/?type="+type+"&hh=3"+"&a="+Math.random());
+last="/show/?hh=3&type=";
+}
+function zhuanti(){
+if ($("#side_pic2").css("height") == swidth) {$("#content").attr("src","/show2/?type="+type+"&a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic2").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic2");
+$("#content").attr("src","/show2/?type="+type+"&a="+Math.random());
+last="/show2/?type=";
+};
+function guanzhu(){
+if ($("#side_pic4").css("height") == swidth) {$("#content").attr("src","/guanzhu/?type="+type+"&a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic4").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic4");
+$("#content").attr("src","/guanzhu/?type="+type+"&a="+Math.random());
+last="/guanzhu/?type=";
+}
+function gonggao(){
+if ($("#side_pic7").css("height") == swidth) {$("#content").attr("src","/gonggao/"+"?a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic7").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic7");
+$("#content").attr("src","/gonggao/"+"?a="+Math.random());
+last="/gonggao/";
+}
+function bangui(){
+if ($("#side_pic8").css("height") == swidth) {$("#content").attr("src","/bangui/"+"?a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic8").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic8");
+$("#content").attr("src","/bangui/"+"?a="+Math.random());
+last="/bangui/";
+}
+function shoucang(){
+if ($("#side_pic3").css("height") == swidth) {$("#content").attr("src","/shoucang/"+"?a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic3").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic3");
+$("#content").attr("src","/shoucang/"+"?a="+Math.random());
+last="/shoucang/?a=";
+}
+function geren(){
+if ($("#side_pic5").css("height") == swidth) {$("#content").attr("src","/geren/"+"?a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic5").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic5");
+$("#content").attr("src","/geren/"+"?a="+Math.random());
+last="/geren/?a=";
+}
+
+function liaotian(){
+if ($("#side_pic6").css("height") == swidth) {$("#content").attr("src","/liaotian1/"+"?a="+Math.random());return;};
+last1.animate({height:"50px",width:"50px"});
+    $("#side_pic6").animate({height:swidth,width:swidth});
+	last1 = $("#side_pic6");
+$("#content").attr("src","/liaotian1/"+"?a="+Math.random());
+last="/liaotian1/?a=";
+}
+
+function jianyi(){
+if ($("#jianyik").val() != "")
+{
+$("#jianyi").slideToggle();
+ $.ajax({ 
+ type:"post", 
+ url: "/jianyi/",
+data:{jy:$("#jianyik").val()},
+dataType:"json", 
+ success:function(data){ 
+ sAlert("提示","提交成功！");
+	setTimeout("",2000); 
+ } 
+ })
+}
+}
+
+</script>
+<script type="text/javascript">
+var type=4;
+var last="/show/?hh=1&type=";
+
+
+
+</script>
+
+
+<style>
+#haha:hover{
+cursor:pointer;
+background-color:#FFFFFF;
+}
+.menu { height: 9%px; display: block; width:70%;}
+.menu ul { list-style: none; padding: 0; margin-left: 50%;margin-top:-2.5%;*margin-top:-0.7%!important; }
+.menu ul li { float: left; /* 菜单子元素的内容超出不可见 */  
+			overflow: hidden; position: relative; text-align: center; line-height: 52px; }
+.menu ul li a { /* 必须是相对定位  */ 
+			position: relative; display: block; width: 130px; height: 45px; font-family: Arial; font-size: 20px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; cursor: pointer; }
+.menu ul li a span { /* 所有层将使用绝对定位 */
+			position: absolute; left: 0; width: 110px; }
+.menu ul li a span.out { top: 0px; }
+.menu ul li a span.over,  .menu ul li a span.bg { /* 起初.over层和.bg层相对a元素-45px以达到隐藏 */  
+			top: -45px; }
+
+/** 简化版示例 **/
+		
+		#menu2 { background:#0099CC; }
+#menu2 ul li a { color:#FFF; }
+#menu2 ul li a span.over { background: #A6DD00; color:#333; }
+#menu2 ul li.nav4 a span.over { background: #86dbf9; }
+#menu2 ul li.nav5 a span.over { background: #e0caf0; }
+#menu2 ul li.nav6 a span.over { background: #9dace9; }
+</style>
+</head>
+
+<body > 
+
+<div id="container">
+  <div id="header">
+<img src="/static/pic/logo.png" style="position:absolute;height:8%;width:12%;margin-right:-10%;"/>
+   <div id="signed"><img onclick="logout()" id="logout" class="img5" src="/static/pic/logout_1.png" style="float:right;margin-left:0;margin-top:-2%;"></img><a id="haha" style="display:block;float:right;" onclick="geren()">{{ username|escape }}</a></div>
+
+  <div id="menu2" class="menu">
+    <ul>
+      <li class="nav4" onclick="wenzhang()"><a class="aa">最新</a></li>
+      <li class="nav5" onclick="zuire()"><a class="aa">最热</a></li>
+      <li class="nav6" onclick="suiji()"><a class="aa">随机</a></li>
+    </ul>
+  </div>
+  
+ </div>
+  <div id="mainContent">
+    <div id="sidebar" >
+    
+    	
+    	<img src="/static/pic/icons/icon_31.gif" class="pic1" id="side_pic1" name="33" onclick="wenzhang()"><img src="/static/pic/icons/icon_11.gif" class="pic2" id="side_pic2" name="33" onclick="zhuanti()">
+		 
+    	<img src="/static/pic/icons/icon_21.gif" class="pic1" id="side_pic3" name="33" onclick="shoucang()"><img src="/static/pic/icons/icon_61.gif" class="pic2" id="side_pic4" name="33" onclick="guanzhu()">
+		 
+    	<img src="/static/pic/icons/icon_41.gif" class="pic1" id="side_pic5" name="33" onclick="geren()"><img src="/static/pic/icons/icon_51.gif" class="pic2" id="side_pic6" name="33" onclick="liaotian()">
+		 
+    	<img src="/static/pic/icons/icon_81.gif" class="pic1" id="side_pic7" name="33" onclick="gonggao()"><img src="/static/pic/icons/icon_71.gif" class="pic2" id="side_pic8" name="33" onclick="bangui()">
+    </div>
+	<img src="/static/pic/fg1.png" style="float:left;height:100%;width:1%;"/>
+	  <div id="choose" >
+		<img id="btnall" class="btn4" src="/static/pic/button/all_2.png"/>
+		<img id="btnbsd" class="btn4" src="/static/pic/button/birth_2.png"/>
+		<img id="btnfes" class="btn4" src="/static/pic/button/festival_2.png"/>
+		<img id="btnday" class="btn4" src="/static/pic/button/daily_2.png"/>
+	</div>
+    <div style="float:left;width:60%;">
+	
+	<iframe id="content" frameborder=0 src="" allowtransparency="true"  style="background-color:transparent;display:none;overflow:hidden;"></iframe>
+	</div>
+<div style="float:right;z-index:200;display:none;width:10%;overflow:hidden;" id="jj">
+	<img id="tjy" src="/static/pic/button/suggestion_1.png" style="width:100%;"/>
+	<div id="jianyi" style="display:none;">
+	<div>
+	<textarea id="jianyik" style="height:70%;width:95%;"></textarea></div>
+	<img id="jianyy" onclick="jianyi()" class="img5" src="/static/pic/button/submit_1.png" style="float:right;"/>
+	</div>
+	</div>
+  </div>
+  <div id="footer"><div style="float:right;"><span><font size=2 color=#FFFFFF >综合咨询：</font></span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=815427601&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:815427601:41" alt="点击这里给我发消息" title="点击这里给我发消息"></a></div>
+  <div style="float:right;"><span><font size=2 color=#FFFFFF >业务咨询：</font></span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=309203850&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:309203850:41" alt="点击这里给我发消息" title="点击这里给我发消息"></a></div></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+var iframe = document.getElementById("content");
+wenzhang();
+$("#btnall").trigger("click");
+if (iframe.attachEvent){
+    iframe.attachEvent("onload", function(){
+         $("#content").css("display","");
+		 $("#jj").css("display","");
+    });
+} else {
+    iframe.onload = function(){
+        $("#content").css("display","");
+		$("#jj").css("display","");
+    };
+}
+})
+
+</script>
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22cfa18f88a971cf58f97da7b729d25d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>
+</html>

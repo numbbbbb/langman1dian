@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
+“http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml” >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/js/salert.js"></script>
+<script src="/static/js/jquery.mousewheel.min.js"></script>
+<script src="/static/js/jquery.mCustomScrollbar.js"></script>
+
+<link href="/static/css/wenzhang.css" rel="stylesheet" type="text/css" /> 
+<link href="/static/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+</head><body>
+	  <script type="text/javascript">
+$(document).ready(function(){
+$(".typeHolder").click(function(){
+window.location="http://www.langman1dian.com/show4/?id="+$(this).find("#12").html()+"&a="+Math.random();
+})
+		  $("#shanchu").mouseleave(function(){
+$(this).attr("src","/static/pic/button/delete_1.png");
+})
+$("#shanchu").mouseover(function(){
+$(this).attr("src","/static/pic/button/delete_2.png");
+})
+		  $("#shanchubtn").mouseleave(function(){
+$(this).attr("src","/static/pic/button/submit_1.png");
+})
+$("#shanchubtn").mouseover(function(){
+$(this).attr("src","/static/pic/button/submit_2.png");
+})
+		  $("#yidongbtn").mouseleave(function(){
+$(this).attr("src","/static/pic/button/submit_1.png");
+})
+$("#yidongbtn").mouseover(function(){
+$(this).attr("src","/static/pic/button/submit_2.png");
+})
+
+		  $("#yidong").mouseleave(function(){
+$(this).attr("src","/static/pic/button/move_1.png");
+})
+$("#yidong").mouseover(function(){
+$(this).attr("src","/static/pic/button/move_2.png");
+})
+		  $("#fanhui").mouseleave(function(){
+$(this).attr("src","/static/pic/button/back_1.png");
+})
+$("#fanhui").mouseover(function(){
+$(this).attr("src","/static/pic/button/back_2.png");
+})
+$("#shanchu").click(function(){
+pp=0;
+if ($("#yidongb").css("display")!="none"){pp=1;$("#yidongb").slideToggle(function (){$("#shanchub").slideToggle();});};
+if (pp !=1){
+$("#shanchub").slideToggle();}
+})
+
+$("#shanchubtn").click(function(){
+if ($("#shanchubiao").val() == null){
+sAlert("提示","请选择要删除的文件夹！");
+	setTimeout("",2000); 
+}
+else{
+   $.ajax({ 
+ type:"get", 
+ url: "/delshoucang2/", 
+ data:{name:$("#shanchubiao").val().toString()},
+ success:function(data){ 
+sAlert("提示","删除成功！");
+	setTimeout("location.reload();",2000); 
+ }  
+ });
+ }
+})
+
+
+$("#yidong").click(function(){
+pp=0;
+if ($("#shanchub").css("display")!="none"){pp=1;$("#shanchub").slideToggle(function (){$("#yidongb").slideToggle();});};
+if (pp !=1){
+$("#yidongb").slideToggle();}
+})
+
+$("#yidongbtn").click(function(){
+if ($("#yidongbiao").val() == null){
+sAlert("提示","请选择要移动的文件夹！");
+	setTimeout("",2000); 
+}
+else if ($("#yidongbiao2").val() == null){
+sAlert("提示","请选择目标文件夹");
+	setTimeout("",2000); 
+}
+else{
+   $.ajax({ 
+ type:"get", 
+ url: "/moveshoucang/", 
+ data:{name:$("#yidongbiao").val().toString(),mubiao:$("#yidongbiao2").val()},
+ success:function(data){ 
+sAlert("提示","移动成功");
+	setTimeout("location.reload();",2000); 
+ }  
+ });
+}
+})
+
+
+$("#fanhui").click(function(){
+window.location="http://www.langman1dian.com/shoucang/?a="+Math.random();
+}
+)
+  $("p").click(function(){
+   $.ajax({ 
+ type:"post", 
+ url: "/shoucang2/", 
+ data:{type:$(this).html()},
+  dataType:"json",
+ success:function(data){ 
+ var html1=$(data).find(".showblog").html();
+ $(".pageli").remove(); 
+ $(".showblog").html(html1);
+ $("#fanhui").css("display","block");
+ $("#xinjian").css("display","none");
+ //重新绑定点击事件 
+ }  
+ });
+  });
+  });
+</script>
+<div id="dd2" style="overflow:hidden;display:none;">
+<div id="youce" class="img5" >
+<img class="img5" id="shanchu" src="/static/pic/button/delete_1.png" />
+<img class="img5" id="yidong" src="/static/pic/button/move_1.png" />
+<img class="img5" id="fanhui" src="/static/pic/button/back_1.png" />
+</div>
+<div id="content_1" class="content">
+{% for  post in posts.object_list %} 
+{% ifequal post.author.sex 'male' %}
+<div class="typeHolder" style="background-color:#7bbfea;padding:2 2 0 2;">
+<span class="wz" >{{ post.author|escape }}</span> 
+<span class="wz" style="display:block;width:80%;font-size:24px;"><b>{{ post.title }}</b></span> 
+<span class="id" id="12" style="display:none;">{{ post.id|escape }}</span> 
+<span class="wz" style="float:right;background-image:url('/static/pic/tip_1.png');width:40px;height:36px;text-align:center;padding:5px;margin-top:-4%;"><font color="white">{{ post.click|escape }}</font></span> 
+<span class="wz" style="float:right;">{{ post.date|date:"Y-m-d" }}</span>
+<span class="wz" style="float:right;margin-right:10px;">{{ post.date|date:"H:i:s" }}</span>
+<img id="line1" src="/static/pic/button/line1.png" />
+</div> 
+{% endifequal %}
+{% ifequal post.author.sex 'female' %}
+<div class="typeHolder" style="background-color:#FF9791;padding:2 2 0 2;">
+<span class="wz" >{{ post.author|escape }}</span> 
+<span class="wz" style="display:block;width:80%;font-size:24px;"><b>{{ post.title }}</b></span> 
+<span class="id" id="12" style="display:none;">{{ post.id|escape }}</span> 
+<span class="wz" style="float:right;background-image:url('/static/pic/tip_1.png');width:40px;height:36px;text-align:center;padding:5px;margin-top:-4%;"><font color="white">{{ post.click|escape }}</font></span> 
+<span class="wz" style="float:right;">{{ post.date|date:"Y-m-d" }}</span>
+<span class="wz" style="float:right;margin-right:10px;">{{ post.date|date:"H:i:s" }}</span>
+<img id="line1" src="/static/pic/button/line1.png" />
+</div> 
+{% endifequal %}
+   {% endfor %} 
+    <div class="pageli" style="display:none;">  
+   <div class="pagination"> 
+   <span class="step-links"> 
+   {% if posts.has_previous %} 
+   <a href="?page={{ posts.previous_page_number|escape }}">previous</a> 
+   {% endif %} 
+   
+   <span class="current"> 
+   Page {{ posts.number|escape }} of {{  posts.paginator.num_pages|escape }}. 
+   </span> 
+   
+   {% if posts.has_next %} 
+   <a href="?page={{ posts.next_page_number|escape }}&hh={{ hh|escape }}" class="nextpage">next</a> 
+   <a id="nextpage2" >next</a> 
+   {% else %}
+   <a href="" class="nextpage">next</a> 
+   <a id="nextpage2" >next</a>
+   {% endif %} 
+   </span> 
+   </div> 
+   </div> 
+ <img id="loading2" src="/static/pic/loading2.gif" style="width:30px;height:30px;margin-left:45%;visibility:hidden;">
+</div>
+<script>
+			$(document).ready(function(){
+			$("#dd2").css("display","");
+				$("#content_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					},
+					callbacks:{
+    onTotalScroll: function(){
+	 var href = $(".nextpage").attr("href"); 
+			 if (href!=""){
+			 $("#loading2").css("visibility","");
+			 $(".nextpage").attr("href","");
+ $.ajax({ 
+ type:"get", 
+ url: href, 
+ success:function(data){ 
+ $("#loading2").remove();
+ var html1=$(data).find(".content").html();
+ $(".pageli").remove(); 
+ $(".content .mCSB_container").append(html1); 
+ $(".content").mCustomScrollbar("update");
+$(".typeHolder").click(function(){
+window.location="http://www.langman1dian.com/show4/?id="+$(this).find("#12").html()+"&a="+Math.random();
+})
+ } 
+ })}
+	}
+}
+				});
+			});
+	</script>
+	</div>
+	<div id="shanchub" style="background:#7BBFEA;height:100px;width:220px;display:none;position:absolute;top:30%;left:30%;z-index:1000;padding:10px;border-style:outset;">
+<select multiple="multiple" size="2" id="shanchubiao" style="width:200px;">
+{% for  post in posts.object_list %} 
+  <option>{{ post.id|escape }}</option>
+     {% endfor %} 
+</select>
+<img class="img5" id="shanchubtn" src="/static/pic/button/submit_1.png" style="margin:0;float:right;"/>
+</div>
+<div id="yidongb" style="background:#7BBFEA;height:100px;width:220px;display:none;position:absolute;top:30%;left:30%;z-index:1000;padding:10px;border-style:outset;">
+<select multiple="multiple" size="2" id="yidongbiao" style="width:200px;">
+{% for  post in posts.object_list %} 
+  <option>{{ post.id|escape }}</option>
+     {% endfor %} 
+</select>
+<select id="yidongbiao2" style="width:200px;">
+{% for  post2 in posts2.object_list %} 
+<option>{{ post2.title|escape }}</option>
+ {% endfor %} 
+</select>
+<img class="img5" id="yidongbtn" src="/static/pic/button/submit_1.png" style="margin:0;float:right;"/>
+</div>
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22cfa18f88a971cf58f97da7b729d25d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+	</body>

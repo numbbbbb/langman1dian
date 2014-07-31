@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
+“http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml” >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/js/salert.js"></script>
+<script src="/static/js/jquery.mousewheel.min.js"></script>
+<script src="/static/js/jquery.mCustomScrollbar.js"></script>
+
+<link href="/static/css/wenzhang.css" rel="stylesheet" type="text/css" /> 
+<link href="/static/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" language="javascript">
+      $(document).ready(function (){
+	  		  $("#gz").mouseleave(function(){
+$(this).attr("src","/static/pic/button/attention_1.png");
+})
+$("#gz").mouseover(function(){
+$(this).attr("src","/static/pic/button/attention_2.png");
+})
+	  $("#gz").click(function(){
+	  $.getJSON("/guanzhu1/",{id:$(this).prev().text()},function(result){
+	  sAlert("提示",result.msg);
+	setTimeout("location.reload();",2000); 
+    });
+	  })
+$("#fresh").mouseleave(function(){
+$(this).attr("src","/static/pic/button/refresh_1.png");
+})
+$("#fresh").mouseover(function(){
+$(this).attr("src","/static/pic/button/refresh_2.png");
+})
+$("#fresh").click(function(){
+location.reload();
+})
+	  haha();
+      });
+      </script>
+</head>
+<body style="background-color:transparent">
+
+<div id="dd2" style="display:none;height:98%;width:100%;overflow:hidden;">
+<div id="content_1" class="content" >
+{% for  post in posts.object_list %} 
+
+{% ifequal post.sex 'female' %}
+<div class="typeHolder" style="background-color:#FF9791;padding:2 2 0 2;">
+<span class="wz" style="color:#{{ post.color }};">{{ post.name|escape }}</span> 
+<img id="gz" class="img5" src="/static/pic/button/attention_1.png" style="float:right;"/>
+<img id="line1" src="/static/pic/button/line1.png" />
+</div> 
+{% endifequal %}
+{% ifequal post.sex 'male' %}
+<div class="typeHolder" style="background-color:#7bbfea;padding:2 2 0 2;">
+<span class="wz" style="color:#{{ post.color }};">{{ post.name|escape }}</span> 
+<img id="gz" class="img5" src="/static/pic/button/attention_1.png" style="float:right;"/>
+<img id="line1" src="/static/pic/button/line1.png" />
+</div> 
+{% endifequal %}
+
+   {% endfor %} 
+    <div class="pageli" style="display:none;">  
+   <div class="pagination"> 
+   <span class="step-links"> 
+   {% if posts.has_previous %} 
+   <a href="?page={{ posts.previous_page_number|escape }}">previous</a> 
+   {% endif %} 
+   
+   <span class="current"> 
+   Page {{ posts.number|escape }} of {{  posts.paginator.num_pages|escape }}. 
+   </span> 
+   
+   {% if posts.has_next %} 
+   <a href="?page={{ posts.next_page_number|escape }}&hh={{ hh|escape }}" class="nextpage">next</a> 
+   <a id="nextpage2" >next</a> 
+   {% else %}
+   <a href="" class="nextpage">next</a> 
+   <a id="nextpage2" >next</a>
+   {% endif %} 
+   </span> 
+   </div> 
+   </div> 
+    <img id="loading2" src="/static/pic/loading2.gif" style="width:30px;height:30px;margin-left:45%;visibility:hidden;">
+</div>
+<div id="youce" class="img5">
+<img id="fresh" class="img5" src="/static/pic/button/refresh_1.png" />
+</div>
+
+    <script type="text/javascript" language="javascript" defer>
+	function haha(){
+$(document).ready(function(){
+
+})
+}
+   </script>
+   <script type="text/javascript">
+$(document).ready(function() {
+var browser=navigator.appName
+$("#content_1").css("height",document.body.clientHeight*1.1);
+if(browser!="Microsoft Internet Explorer" ){
+$("#content_1").css("height",document.body.clientHeight*0.98);
+}
+})
+</script>
+   <script>
+			$(document).ready(function(){
+			$("#dd2").css("display","");
+				$("#content_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					},
+					callbacks:{
+    onTotalScroll: function(){
+	 var href1 = $(".nextpage").attr("href"); 
+			 if (href1!=""){
+			 $("#loading2").css("visibility","");
+			 $(".nextpage").attr("href","");
+ $.ajax({ 
+ type:"get", 
+ url: href1, 
+ success:function(data){ 
+ $("#loading2").remove();
+ var html1=$(data).find(".content").html();
+ $(".pageli").remove(); 
+ $(".content .mCSB_container").append(html1); 
+ $(".content").mCustomScrollbar("update");
+ 	  		  $("#gz").mouseleave(function(){
+$(this).attr("src","/static/pic/button/attention_1.png");
+})
+$("#gz").mouseover(function(){
+$(this).attr("src","/static/pic/button/attention_2.png");
+})
+	  $("#gz").click(function(){
+	  $.getJSON("/guanzhu1/",{id:$(this).prev().text()},function(result){
+	  sAlert("提示",result.msg);
+	setTimeout("location.reload();",2000); 
+    });
+	  })
+ } 
+ })}
+	}
+}
+				});
+			});
+	</script>
+</div>
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22cfa18f88a971cf58f97da7b729d25d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>

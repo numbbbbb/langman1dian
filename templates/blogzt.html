@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
+“http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml” >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/js/salert.js"></script>
+<script src="/static/js/jquery.mousewheel.min.js"></script>
+<script src="/static/js/jquery.mCustomScrollbar.js"></script>
+
+<link href="/static/css/wenzhang.css" rel="stylesheet" type="text/css" /> 
+<link href="/static/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+
+ <script type="text/javascript">
+ window.UEDITOR_HOME_URL = "/static/ueditor/"</script>
+ <link  type="text/css"  rel="stylesheet" href="/static/ueditor/themes/default/ueditor.css" />   
+  <script type="text/javascript" src="/static/ueditor/editor_all_min.js" ></script>   
+  <script type="text/javascript" src="/static/ueditor/editor_config.js" ></script>
+</head><body>
+  <script type="text/javascript" language="javascript">
+  var browser=navigator.appName;
+      $(document).ready(function (){
+	  $("#content_1").css("height",document.body.clientHeight*0.98);
+	  if(browser=="Microsoft Internet Explorer" ){
+	  $("#content_1").css("height",screen.height*0.68);
+	  }
+	  $("#back").mouseleave(function(){
+$(this).attr("src","/static/pic/button/back_1.png");
+})
+$("#back").mouseover(function(){
+$(this).attr("src","/static/pic/button/back_2.png");
+})
+	  $("#huifu").mouseleave(function(){
+$(this).attr("src","/static/pic/button/reply_1.png");
+})
+$("#huifu").mouseover(function(){
+$(this).attr("src","/static/pic/button/reply_2.png");
+})
+
+$("#back").click(function (){
+history.go(-1);
+})	  
+$("#huifu").click(function (){
+if ($("#ueditor1").css("display")!="none") {
+$("#ueditor1").css("display","none");
+if(browser=="Microsoft Internet Explorer" ){
+$("#content_1").animate({height:screen.height*0.68},function (){$(".content").mCustomScrollbar("update");})
+return;
+}
+$("#content_1").animate({height:document.body.clientHeight*0.98},function (){$(".content").mCustomScrollbar("update");
+});
+return;}
+if(browser=="Microsoft Internet Explorer" ){
+$("#content_1").animate({height:screen.height*0.15},function (){$(".content").mCustomScrollbar("update");$("#ueditor1").css("display","");});return;}
+$("#content_1").animate({height:document.body.clientHeight*0.25},function (){$(".content").mCustomScrollbar("update");$("#ueditor1").css("display","");});
+})
+
+	  $("#fresh").mouseleave(function(){
+$(this).attr("src","/static/pic/button/refresh_1.png");
+})
+$("#fresh").mouseover(function(){
+$(this).attr("src","/static/pic/button/refresh_2.png");
+})
+	  $("#click11").mouseleave(function(){
+$(this).attr("src","/static/pic/button/like_1.png");
+})
+$("#click11").mouseover(function(){
+$(this).attr("src","/static/pic/button/like_2.png");
+})
+	  $("#guanzhu1").mouseleave(function(){
+$(this).attr("src","/static/pic/button/attention_1.png");
+})
+$("#guanzhu1").mouseover(function(){
+$(this).attr("src","/static/pic/button/attention_2.png");
+})
+$("#fresh").click(function(){
+location.reload();
+})	  
+$("#click11").click(function(aa){
+$.getJSON("/click1/",{id:$("#id1").text()},function(result){
+      if (result.msg=="成功"){sAlert("提示","顶成功！");
+	setTimeout("location.reload()",2000);}
+	  else {sAlert("提示","您已顶过！");
+	setTimeout("",2000);}
+    });
+})
+$("#guanzhu1").click(function(){
+$.getJSON("/guanzhu1/",{id:$("#zuozhe").text()},function(result){
+      if (result.msg=="成功"){sAlert("提示","关注成功！");
+	$("#guanzhu1").remove();
+	setTimeout("",2000);}
+	  else {sAlert("提示","关注失败！");
+	setTimeout("",2000);}
+    });
+})
+
+      });
+      </script>
+
+
+
+<div id="dd1" style="width:98%;position:absolute;overflow:hidden;display:none;">
+<div id="content_1" class="content" >
+{% autoescape off %} 
+{% ifequal author1.sex 'male' %}
+<div class="typeHolder1" style="background-color:#7bbfea;">
+<div id="zuo1" style="width:80%;float:left;margin-left:1%;">
+ <p style="display:none" id="id1">{{ id1|escape }}</p>
+  <font size="3" color="#FFFFFF"><p>{{ date1|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;&nbsp;{{ date1|date:"H:i:s" }}</p></font>
+    <p id="zuozhe" ><img style="width:50px;height:50px;" src="{{ author1.iconaddress }}"/><span onclick="window.location='/geren2/?name={{ author1 }}'" id="mingz" style="display:block;color:#{{ author1.color }};">{{ author1|escape }}</span></p>
+ <p id="wenzhang1"><font size="6"><b>{{ title1|escape }}</b></font></p>
+ <p>{{ text1 }}</p>
+ </div>
+ 
+ <div id="you1" style="width:19%;float:left;">
+<img id="click11" class="img5" style="float:right;display:{{ dd1 }}" src="/static/pic/button/like_1.png" />
+<img id="guanzhu1" class="img5" style="float:right;display:{{ display1 }}" src="/static/pic/button/attention_1.png" />
+ </div>
+ <img id="line2" src="/static/pic/button/line1.png" />
+</div>
+{% endifequal %}
+{% ifequal author1.sex 'female' %}
+<div class="typeHolder1" style="background-color:#FF9791;">
+<div id="zuo1" style="width:80%;float:left;margin-left:1%;">
+ <p style="display:none" id="id1">{{ id1|escape }}</p>
+ <font size="3" color="#FFFFFF"><p>{{ date1|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;&nbsp;{{ date1|date:"H:i:s" }}</p></font>
+    <p id="zuozhe" ><img style="width:50px;height:50px;" src="{{ author1.iconaddress }}"/><span onclick="window.location='/geren2/?name={{ author1 }}'" id="mingz" style="display:block;color:#{{ author1.color }};">{{ author1|escape }}</span></p>
+ <p id="wenzhang1"><font size="6"><b>{{ title1|escape }}</b></font></p>
+ <p>{{ text1 }}</p>
+ </div>
+ 
+ <div id="you1" style="width:19%;float:left;">
+<img id="click11" class="img5" style="float:right;display:{{ dd1 }}" src="/static/pic/button/like_1.png" />
+<img id="guanzhu1" class="img5" style="float:right;display:{{ display1 }}" src="/static/pic/button/attention_1.png" />
+ </div>
+ <img id="line2" src="/static/pic/button/line1.png" />
+</div>
+{% endifequal %}
+<div class="neww">
+   {% for  post in posts.object_list %} 
+   {% ifequal post.name.sex 'male' %}
+   <div class="typeHolder1" style="background-color:#7bbfea;padding:2 2 0 2;"> 
+   <div style="width:10%;">
+   <p class="wz"><img style="width:50px;height:50px;" src="{{ post.name.iconaddress }}" /><span onclick="window.location='/geren2/?name={{ post.name }}'" id="mingz" style="display:block;color:#{{ post.color }};">{{ post.name|escape }}</span></p> 
+   </div>
+<p class="wz">{{ post.text }}</p>  
+<img id="line2" src="/static/pic/button/line1.png" />
+</div> 
+{% endifequal %}
+   {% ifequal post.name.sex 'female' %}
+   <div class="typeHolder1" style="background-color:#FF9791;padding:2 2 0 2;"> 
+   <div>
+ <p class="wz"><img style="width:50px;height:50px;" src="{{ post.name.iconaddress }}" /><span onclick="window.location='/geren2/?name={{ post.name }}'" id="mingz" style="display:block;color:#{{ post.color }};">{{ post.name|escape }}</span></p> 
+ </div>
+<p class="wz">{{ post.text }}</p> 
+<img id="line2" src="/static/pic/button/line1.png" />
+</div> 
+{% endifequal %}
+   {% endfor %} 
+ <script type="text/javascript">
+function submittext1()
+{
+xmlhttp=null;
+if (window.XMLHttpRequest)
+  {// code for Firefox, Opera, IE7, etc.
+  xmlhttp=new XMLHttpRequest();
+  }
+else if (window.ActiveXObject)
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+if (xmlhttp!=null)
+  {
+  if (editor.getContent() == ""){ sAlert("提示","内容不能为空！");
+	setTimeout("",2000);}
+  else{
+  xmlhttp.onreadystatechange=state_Change;
+  xmlhttp.open("POST","/newcommentzt/",true);
+  xmlhttp.setRequestHeader("CONTENE-TYPE","application/x-www-form-urlencoded");
+  xmlhttp.send("TEXT="+editor.getContent()+"&ID="+document.getElementById('id1').textContent);
+  }}
+else
+  {
+  alert("Your browser does not support XMLHTTP.");
+  }
+
+function state_Change()
+{
+if (xmlhttp.readyState==4)
+  {// 4 = "loaded"
+  if (xmlhttp.status==200)
+    {// 200 = "OK"
+   sAlert("提示","提交成功！");
+	setTimeout("location.reload()",2000);
+    }
+  else
+    {
+    alert("Problem retrieving data:" + xmlhttp.statusText);
+    }
+  }
+
+}
+}
+</script>
+
+    <div class="pageli" style="display:none;">  
+   <div class="pagination"> 
+   <span class="step-links"> 
+   {% if posts.has_previous %} 
+   <a href="?page={{ posts.previous_page_number|escape }}">previous</a> 
+   {% endif %} 
+   
+   <span class="current"> 
+   Page {{ posts.number|escape }} of {{  posts.paginator.num_pages|escape }}. 
+   </span> 
+   
+   {% if posts.has_next %} 
+   <a href="?page={{ posts.next_page_number|escape }}" class="nextpage">next</a> 
+   <a id="nextpage2" >next</a> 
+   {% else %}
+   <a href="" class="nextpage">next</a> 
+   <a id="nextpage2" >next</a>
+   {% endif %} 
+    {% endautoescape %} 
+   </span> 
+   </div> 
+   </div> 
+  </div>
+   <img id="loading2" src="/static/pic/loading2.gif" style="width:30px;height:30px;margin-left:45%;visibility:hidden;">
+</div>
+ <div id="ueditor1" style="display:none;">
+  {{ form.myContent }}
+  </div>
+<div id="youce" class="img5" style="margin-left:82%;">
+<img id="fresh" class="img5" src="/static/pic/button/refresh_1.png" />
+<img id="back" class="img5" src="/static/pic/button/back_1.png" />
+<img id="huifu" class="img5" src="/static/pic/button/reply_1.png" style="display:{{ dd1 }}"/>
+</div>
+<script>
+			$(document).ready(function(){
+			$("#dd1").css("display","");
+				$("#content_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					},
+					callbacks:{
+    onTotalScroll: function(){
+	 var href1 = $(".nextpage").attr("href"); 
+			 if (href1!=""){
+			 $("#loading2").css("visibility","");
+			 $(".nextpage").attr("href","");
+ $.ajax({ 
+ type:"get", 
+ url: href1, 
+ success:function(data){ 
+ $("#loading2").remove();
+ var html1=$(data).find(".neww").html();
+ $(".pageli").remove(); 
+ $(".content .mCSB_container").append(html1); 
+ $(".content").mCustomScrollbar("update");
+ } 
+ })}
+	}
+}
+				});
+				 
+			});
+	</script>
+</div>
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22cfa18f88a971cf58f97da7b729d25d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>

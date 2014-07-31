@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
+“http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml” >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script src="/static/js/jquery.mousewheel.min.js"></script>
+<script src="/static/js/jquery.mCustomScrollbar.js"></script>
+
+<link href="/static/css/wenzhang.css" rel="stylesheet" type="text/css" /> 
+<link href="/static/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <script type="text/javascript" language="javascript">
+      $(document).ready(function (){  
+	  $(".typeHolder").click(function(){
+window.location="http://www.langman1dian.com/show4/?id="+$(this).find("#12").html()+"&a="+Math.random();
+})
+$("#fresh").click(function(){
+location.reload();
+})
+$("#fresh").mouseleave(function(){
+$(this).attr("src","/static/pic/button/refresh_1.png");
+})
+$("#fresh").mouseover(function(){
+$(this).attr("src","/static/pic/button/refresh_2.png");
+})
+
+	  	  $("#back").mouseleave(function(){
+$(this).attr("src","/static/pic/button/back_1.png");
+})
+$("#back").mouseover(function(){
+$(this).attr("src","/static/pic/button/back_2.png");
+})
+
+$("#back").click(function (){
+history.go(-1);
+})	 
+      });
+      </script>
+<style>
+#guanzhu22,#beiguanzhu22,#guanzhu2,#beiguanzhu2:hover{
+cursor:auto;
+}
+</style>
+
+
+<div id="dd2" style="height:98%;width:100%;overflow:hidden;">
+ <div style="width:50%;height:50%;">
+ {% autoescape off %} 
+  <div id="zuo1" style="float:left;width:40%;">
+ <p style="display:none" id="id1">{{ id1|escape }}</p>
+ <p id="wenzhang1" style="color:#{{ color1 }};">{{ name1|escape }}</p>
+ <p><img src="{{ url1|escape }}"/></p>
+ </div>
+ <div id="you1" style="float:left;width:50%;">
+<img class="img5" id="guanzhu22" src="/static/pic/button/geren/attention_11.png" /> <p id="guanzhu2" style="margin-top:-18%;margin-left:45%;">{{ guanzhu1|escape }}</p>
+<img class="img5" id="beiguanzhu22" src="/static/pic/button/geren/attention_33.png" /> <p id="beiguanzhu2" style="margin-top:-18%;margin-left:45%;">{{ beiguanzhu1|escape }}</p>
+ </div>
+ {% endautoescape %} 
+ </div>
+<div id="content_1" class="content" style="height:50%;">
+{% for  post in posts.object_list %} 
+ {% ifequal post.author.sex 'male' %}
+<div class="typeHolder" style="background-color:#7bbfea;padding:2 2 0 2;">
+<span class="wz" style="color:#{{ post.author.color }};">{{ post.author|escape }}</span> 
+<span class="wz" style="display:block;width:80%;font-size:24px;"><b>{{ post.title }}</b></span> 
+<span class="id" id="12" style="display:none;">{{ post.id|escape }}</span> 
+<span class="wz" style="float:right;background-image:url('/static/pic/tip_1.png');width:40px;height:36px;text-align:center;padding:5px;margin-top:-4%;"><font color="white">{{ post.click|escape }}</font></span> 
+<span class="wz" style="float:right;">{{ post.date|date:"Y-m-d" }}</span>
+<span class="wz" style="float:right;margin-right:10px;">{{ post.date|date:"H:i:s" }}</span>
+<img id="line1" src="/static/pic/button/line1.png" />
+</div> 
+{% endifequal %}
+{% ifequal post.author.sex 'female' %}
+<div class="typeHolder" style="background-color:#FF9791;padding:2 2 0 2;">
+<span class="wz" style="color:#{{ post.author.color }};">{{ post.author|escape }}</span> 
+<span class="wz" style="display:block;width:80%;font-size:24px;"><b>{{ post.title }}</b></span> 
+<span class="id" id="12" style="display:none;">{{ post.id|escape }}</span> 
+<span class="wz" style="float:right;background-image:url('/static/pic/tip_1.png');width:40px;height:36px;text-align:center;padding:5px;margin-top:-4%;"><font color="white">{{ post.click|escape }}</font></span> 
+<span class="wz" style="float:right;">{{ post.date|date:"Y-m-d" }}</span>
+<span class="wz" style="float:right;margin-right:10px;">{{ post.date|date:"H:i:s" }}</span>
+<img id="line1" src="/static/pic/button/line1.png" />
+</div> 
+{% endifequal %}
+   {% endfor %} 
+    <div class="pageli" style="display:none;">  
+   <div class="pagination"> 
+   <span class="step-links"> 
+   {% if posts.has_previous %} 
+   <a href="?page={{ posts.previous_page_number|escape }}">previous</a> 
+   {% endif %} 
+   
+   <span class="current"> 
+   Page {{ posts.number|escape }} of {{  posts.paginator.num_pages|escape }}. 
+   </span> 
+   
+   {% if posts.has_next %} 
+   <a href="?page={{ posts.next_page_number|escape }}&hh={{ hh|escape }}" class="nextpage">next</a> 
+   <a id="nextpage2" >next</a> 
+   {% else %}
+   <a href="" class="nextpage">next</a> 
+   <a id="nextpage2" >next</a>
+   {% endif %} 
+   </span> 
+   </div> 
+   </div> 
+    <img id="loading2" src="/static/pic/loading2.gif" style="width:30px;height:30px;margin-left:45%;visibility:hidden;">
+</div>
+<div id="youce" class="img5" style="margin-top:-32.5%;*margin-top:-11%!important;">
+<img id="fresh" class="img5" src="/static/pic/button/refresh_1.png" />
+<img id="back" class="img5" src="/static/pic/button/back_1.png" />
+</div>
+<script>
+			$(document).ready(function(){
+			$("#dd2").css("display","");
+				$("#content_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					},
+					callbacks:{
+    onTotalScroll: function(){
+	 var href = $(".nextpage").attr("href"); 
+			 if (href!=""){
+			 $("#loading2").css("visibility","");
+			 $(".nextpage").attr("href","");
+ $.ajax({ 
+ type:"get", 
+ url: href, 
+ success:function(data){ 
+ $("#loading2").remove();
+ var html1=$(data).find(".content").html();
+ $(".pageli").remove(); 
+ $(".content .mCSB_container").append(html1); 
+ $(".content").mCustomScrollbar("update");
+	  $(".typeHolder").click(function(){
+window.location="http://www.langman1dian.com/show4/?id="+$(this).find("#12").html()+"&a="+Math.random();
+})
+ } 
+ })}
+	}
+}
+				});
+			});
+	</script>
+	   <script type="text/javascript">
+$(document).ready(function() {
+var browser=navigator.appName;
+if(browser=="Microsoft Internet Explorer" ){
+$("#content_1").css("height",screen.height*0.4);
+}
+})
+</script>
+</div>
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22cfa18f88a971cf58f97da7b729d25d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>
